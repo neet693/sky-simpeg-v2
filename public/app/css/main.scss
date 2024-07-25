@@ -1,0 +1,390 @@
+$purple: #7839F3;
+$sofpurple: #ECE3FE;
+$darpurple: #F5EFFF;
+$darkpurple: #4D1DAB;
+$white: #fff;
+$black: #211B3D;
+$green: #31B380;
+$red: rgb(247, 51, 83);
+$lildarpurple: #5B5575;
+$brpurple: #CBB0FF;
+$newpurple: #E7E5F4;
+$graypurple: #EAE8F5;
+$darkwhite: #F7F7FB;
+$graypurplenew: #6F6A86;
+$darkpurplenew: #4D1CAB;
+$font-weights: ("light": 300, "regular": 400, "medium": 500, "semibold": 600);
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.pl-150 {
+    padding-left: 150px;
+}
+
+.copyright {
+    padding: 70px 0 0 0;
+    p {
+        text-align: center;
+        font-weight: map-get($font-weights, regular);
+        color: $graypurplenew;
+    }
+}
+
+.header-third {
+    font-size: 22px;
+    color: $black;
+    font-weight: map-get($font-weights, semibold);
+}
+
+.subheader {
+    font-size: 16px;
+    font-weight: map-get($font-weights, regular);
+    color: $lildarpurple;
+}
+
+.login-user {
+    .right {
+        width: 50%;
+        float: left;
+        padding: 120px;
+        .people {
+            margin-top: 100px;
+            height: 170px;
+        }
+        .logo {
+            height: 42px;
+            margin-bottom: 100px;
+        }
+        .btn-border {
+            border: 1px solid $newpurple;
+            border-radius: 50px;
+            padding: 12px 80px 12px 80px;
+        }
+        .btn-google-login {
+            margin-top: 40px;
+            .icon {
+                margin-right: 8px;
+            }
+        }
+    }
+    .left {
+        background-color: $darkpurplenew;
+        width: 50%;
+        min-height: 900px;
+        text-align: center;
+        float: left;
+        img {
+            margin-top: 200px;
+            height: 540px;
+        }
+    }
+}
+
+.testimonials {
+    background: $darkwhite;
+    margin-top: 370px;
+    padding: 70px 0 70px 0;
+    .item-review {
+        border-radius: 13px;
+        background: $white;
+        padding: 20px;
+        .message {
+            font-size: 16px;
+            font-weight: map-get($font-weights, regular);
+            color: $lildarpurple;
+            line-height: 30px;
+            min-height: 90px;
+            margin-top: 30px;
+        }
+        .user {
+            margin-top: 30px;
+            .photo {
+                width: 56px;
+                height: 56px;
+                float: left;
+                margin-right: 16px;
+            }
+            .info {
+                padding-top: 5px;
+                .name {
+                    color: $black;
+                    font-weight: map-get($font-weights, medium);
+                    font-size: 18px;
+                    margin-bottom: 0;
+                }
+                .role {
+                    @extend .message;
+                    min-height: 0;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+.pricing {
+    margin-top: 100px;
+    background: $darkpurple;
+    padding-top: 70px;
+    max-height: 620px;
+    .copywriting {
+        margin-top: 80px;
+    }
+    .support {
+        font-size: 16px;
+        font-weight: map-get($font-weights, regular);
+        color: $brpurple;
+        line-height: 30px;
+        margin-top: 30px;
+    }
+    .table-pricing {
+        background: $white;
+        border-radius: 40px;
+        padding: 30px;
+        border: 1px solid $graypurple;
+        .price {
+            font-size: 42px;
+            font-weight: map-get($font-weights, semibold);
+            color: $black;
+            margin-bottom: 20px;
+        }
+        .item-benefit-pricing {
+            img {
+                float: left;
+                margin-right: 8px;
+                margin-top: 2px;
+            }
+            p {
+                font-size: 16px;
+                font-weight: map-get($font-weights, medium);
+                color: $black;
+            }
+            .divider {
+                height: 1px;
+                width: 100%;
+                background: $newpurple;
+            }
+        }
+    }
+    .paket-gila {
+        min-height: 697px;
+    }
+    .paket-biasa {
+        min-height: 453px;
+    }
+}
+
+.clear {
+    clear: both;
+}
+
+.steps {
+    .item-step {
+        .cover {
+            height: 497px;
+        }
+        .copywriting {
+            padding-top: 100px;
+        }
+        .support {
+            font-size: 16px;
+            font-weight: map-get($font-weights, regular);
+            color: $lildarpurple;
+            line-height: 30px;
+            margin-top: 30px;
+        }
+    }
+}
+
+.btn-master {
+    padding: 11px 36px 11px 36px;
+    border-radius: 100px;
+    border: 0;
+    font-weight: map-get($font-weights, medium);
+}
+
+.btn-thirdty {
+    @extend .btn-master;
+    background: $green;
+    color: $white;
+}
+
+.btn-primary {
+    @extend .btn-master;
+    background: $purple;
+    color: $white;
+    &:hover {
+        background: $green;
+    }
+}
+
+.story {
+    font-weight: map-get($font-weights, semibold);
+    font-size: 16px;
+    color: $green;
+}
+
+.primary-header {
+    font-weight: map-get($font-weights, semibold);
+    font-size: 30px;
+    color: $black;
+}
+
+.benefits {
+    margin-bottom: 100px;
+    .item-benefit {
+        .icon {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 20px;
+        }
+        .title {
+            font-size: 20px;
+            color: $black;
+            font-weight: map-get($font-weights, medium);
+        }
+        .support {
+            font-size: 16px;
+            font-weight: map-get($font-weights, regular);
+            color: $lildarpurple;
+            line-height: 30px;
+        }
+    }
+}
+
+.pb-70 {
+    padding-bottom: 70px;
+}
+
+.header-wrap {
+    .primary-header {
+        margin-top: 8px;
+    }
+    .story {
+        margin-bottom: 0;
+    }
+}
+
+.text-purple {
+    color: $purple;
+}
+
+.text-white {
+    color: $white !important;
+}
+
+.btn-secondary {
+    @extend .btn-master;
+    background: $darpurple;
+    color: $purple;
+}
+
+.banner {
+    padding: 80px 0 80px 0;
+    .copywriting {
+        padding-top: 80px;
+    }
+    .header {
+        margin: 20px 0 20px 0;
+        font-size: 42px;
+        color: $black;
+        font-weight: map-get($font-weights, semibold);
+    }
+    .support {
+        font-size: 16px;
+        font-weight: map-get($font-weights, regular);
+        color: $lildarpurple;
+        line-height: 30px;
+    }
+    .cta {
+        margin-top: 30px;
+    }
+    .brands {
+        margin-top: 60px;
+        img {
+            height: 30px;
+        }
+    }
+}
+
+.dashboard {
+    .table {
+        tr {
+            border: 1px solid $white;
+        }
+    }
+}
+
+.basic-form {
+    input {
+        border: 1px solid $newpurple;
+        border-radius: 50px;
+        padding: 12px 20px 12px 20px;
+    }
+}
+
+.checkout {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    .item-bootcamp {
+        .cover {
+            height: 255px;
+            margin-bottom: 30px;
+        }
+        .package {
+            font-size: 22px;
+            color: $green;
+            font-weight: map-get($font-weights, semibold);
+        }
+        .description {
+            font-size: 16px;
+            color: $black;
+            font-weight: map-get($font-weights, regular);
+            line-height: 30px;
+        }
+    }
+}
+
+.text-green {
+    color: $green !important;
+}
+
+.text-red {
+    color: $red !important;
+}
+
+.navbar {
+    box-shadow: 1px 8px 61px 0px rgba(22, 28, 51, 0.08);
+    -webkit-box-shadow: 1px 8px 61px 0px rgba(22, 28, 51, 0.08);
+    -moz-box-shadow: 1px 8px 61px 0px rgba(22, 28, 51, 0.08);
+    padding: 24px 0 24px 0;
+    .user-logged {
+        a {
+            color: $black;
+            text-decoration: none;
+        }
+        .user-photo {
+            width: 56px;
+            height: 56px;
+            margin-left: 10px;
+        }
+    }
+    .navbar-nav {
+        .nav-link {
+            color: $black;
+            font-weight: map-get($font-weights, regular);
+            padding-left: 30px;
+        }
+        .active {
+            color: $purple !important;
+            font-weight: map-get($font-weights, medium);
+        }
+    }
+    .navbar-brand {
+        img {
+            height: 42px;
+        }
+    }
+}
