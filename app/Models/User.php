@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(EmploymentDetail::class, 'employee_number', 'employee_number');
     }
+
+    public function employeeCertificates()
+    {
+        return $this->hasMany(EmployeeCertification::class, 'employee_number', 'employee_number');
+    }
 }

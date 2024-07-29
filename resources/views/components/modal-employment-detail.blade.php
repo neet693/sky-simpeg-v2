@@ -85,7 +85,7 @@
                 <div class="flex justify-end mt-4">
                     <button type="submit"
                         class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm">Save</button>
-                    <button type="button" id="closeModalButton"
+                    <button type="button" id="closeEmployeeDetailModalButton"
                         class="ml-3 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">Close</button>
                 </div>
             </form>
@@ -95,11 +95,11 @@
 <!-- End Modal -->
 
 <script>
-    document.getElementById('openModalButton').addEventListener('click', function() {
+    document.getElementById('openEmployeeDetailModalButton').addEventListener('click', function() {
         document.getElementById('employmentModal').classList.remove('hidden');
     });
 
-    document.getElementById('closeModalButton').addEventListener('click', function() {
+    document.getElementById('closeEmployeeDetailModalButton').addEventListener('click', function() {
         document.getElementById('employmentModal').classList.add('hidden');
     });
 </script>

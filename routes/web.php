@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeCertificationController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmploymentDetailController;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +36,6 @@ Route::middleware([
 
     // Route untuk menyimpan atau memperbarui detail pekerjaan
     Route::post('/employees/{employee_number}/employment-details', [EmploymentDetailController::class, 'storeOrUpdate'])->name('employment_detail.store');
+
+    Route::post('/employees/{employee_number}/employee-certificates', [EmployeeCertificationController::class, 'storeOrUpdate'])->name('employee_certification.store');
 });
