@@ -21,7 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
-    <title>Website PPDB Sekolah Kristen Yahya</title>
+    <title>SKY SIMPEG</title>
 </head>
 
 <body>

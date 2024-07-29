@@ -26,7 +26,7 @@
             <path d="M10 3H3V10H10V3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
 
-        <span>Overview</span>
+        <span>Dashboard</span>
     </a>
 
     <!-- <a href="./employees.html" class="sidebar-item"> -->
@@ -75,7 +75,7 @@
         <span>Payroll</span>
     </a>
 
-    <h5 class="sidebar-title">Others</h5>
+    <h5 class="sidebar-title">Personal Space</h5>
 
     <a href="#" class="sidebar-item" onclick="toggleActive(this)">
         <!-- <img src="./assets/img/global/box.svg" alt=""> -->
@@ -89,7 +89,7 @@
                 stroke-linejoin="round" />
         </svg>
 
-        <span>Insurances</span>
+        <span>Detail Karyawan</span>
     </a>
 
     <a href="#" class="sidebar-item" onclick="toggleActive(this)">
@@ -102,7 +102,7 @@
                 stroke-linejoin="round" />
         </svg>
 
-        <span>Company</span>
+        <span>Diklat</span>
     </a>
 
     <a href="#" class="sidebar-item" onclick="toggleActive(this)">
@@ -121,7 +121,7 @@
                 stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
 
-        <span>Rewards</span>
+        <span>History Pendidikan</span>
     </a>
 
     <a href="{{ route('profile.show') }}" class="sidebar-item" onclick="toggleActive(this)">
@@ -136,7 +136,7 @@
                 stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
 
-        <span>Account Setting</span>
+        <span>Pengaturan Akun</span>
     </a>
 
     <a href="{{ route('logout') }}" class="sidebar-item"
@@ -149,7 +149,7 @@
                 d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9"
                 stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span>Logout</span>
+        <span>Keluar</span>
     </a>
 
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

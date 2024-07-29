@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +29,5 @@ Route::middleware([
     Route::get('/employees', function () {
         return view('employees.index');
     })->name('employees');
+    Route::get('/employees/{employee_number}', [EmployeeController::class, 'show'])->name('employee.show');
 });

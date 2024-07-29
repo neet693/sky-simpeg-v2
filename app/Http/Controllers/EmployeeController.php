@@ -35,9 +35,10 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($employee_number)
     {
-        //
+        $employee = User::where('employee_number', $employee_number)->firstOrFail();
+        return view('employees.show', compact('employee'));
     }
 
     /**

@@ -47,8 +47,7 @@
         @foreach ($employees as $employee)
             <div class="col-3">
                 <div class="employee-card">
-                    <img class="employee-img" src="{{ asset('template/assets/img/home/history/photo.png') }}"
-                        alt="Employee Photo">
+                    <img class="employee-img" src="{{ $employee->profile_photo_url }}" alt="Employee Photo">
                     <h2 class="employee-name">{{ $employee->name }}</h2>
                     <span class="employee-role">{{ $employee->employee_number }}</span>
                     @if ($employee->verified)
@@ -63,6 +62,8 @@
                     @else
                         <a href="#" class="employee-status unverified">Verify Now</a>
                     @endif
+                    <a href="{{ route('employee.show', ['employee_number' => $employee->employee_number]) }}"
+                        class="employee-status">Lihat Detail</a>
                 </div>
             </div>
         @endforeach
