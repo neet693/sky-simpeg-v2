@@ -36,4 +36,41 @@
             </div>
         </div>
     </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="text-xl font-semibold">Informasi Kepegawaian Yahya</h3>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <button id="openModalButton" class="btn btn-primary">Tambah / Edit</button>
+            </div>
+            @include('components.modal-employment-detail')
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mt-4">
+            <div>
+                <p class="text-gray-600">Tahun Masuk</p>
+                <p class="font-semibold">
+                    {{ $employee->employmentDetail ? $employee->employmentDetail->tahun_masuk->format('Y') : 'N/A' }}</p>
+            </div>
+            <div>
+                <p class="text-gray-600">Unit</p>
+                <p class="font-semibold">{{ $employee->employmentDetail ? $employee->employmentDetail->unit->name : 'N/A' }}
+                </p>
+            </div>
+            <div>
+                <p class="text-gray-600">Tahun sertifikasi</p>
+                <p class="font-semibold">
+                    {{ $employee->employmentDetail ? $employee->employmentDetail->tahun_sertifikasi->format('Y') : 'N/A' }}
+                </p>
+            </div>
+            <div>
+                <p class="text-gray-600">Status Kepegawaian</p>
+                <p class="font-semibold">
+                    {{ $employee->employmentDetail ? $employee->employmentDetail->status_kepegawaian : 'N/A' }}
+                </p>
+            </div>
+        </div>
+    </div>
 @endsection

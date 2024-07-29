@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmploymentDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +30,9 @@ Route::middleware([
     Route::get('/employees', function () {
         return view('employees.index');
     })->name('employees');
+    // Route untuk menampilkan detail karyawan
     Route::get('/employees/{employee_number}', [EmployeeController::class, 'show'])->name('employee.show');
+
+    // Route untuk menyimpan atau memperbarui detail pekerjaan
+    Route::post('/employees/{employee_number}/employment-details', [EmploymentDetailController::class, 'storeOrUpdate'])->name('employment_detail.store');
 });

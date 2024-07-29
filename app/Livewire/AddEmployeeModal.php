@@ -17,7 +17,7 @@ class AddEmployeeModal extends Component
         'phone_number' => 'required|string|max:255',
         'employee_number' => 'required|string|max:255|unique:users',
         'birth_date' => 'required|date',
-        'gender' => 'required|in:male,female',
+        'gender' => 'required|in:Laki - Laki,Perempuan',
         'address' => 'required|string|max:255',
         'password' => 'required|string|min:8',
     ];

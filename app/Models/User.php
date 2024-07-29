@@ -65,4 +65,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function employmentDetail()
+    {
+        return $this->hasOne(EmploymentDetail::class, 'employee_number', 'employee_number');
+    }
 }

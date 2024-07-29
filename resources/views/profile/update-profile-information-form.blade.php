@@ -72,9 +72,8 @@
             <x-label for="gender" value="{{ __('Gender') }}" />
             <select id="gender" class="mt-1 block w-full" wire:model="state.gender">
                 <option value="" selected>Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="Laki - Laki">Laki - Laki</option>
+                <option value="Perempuan">Perempuan</option>
             </select>
             <x-input-error for="gender" class="mt-2" />
         </div>

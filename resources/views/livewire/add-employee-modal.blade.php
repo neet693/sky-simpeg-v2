@@ -75,9 +75,9 @@
                         <select id="gender" wire:model="gender"
                             class="mt-1 block w-full border-2 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
                             required>
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="" selected>Select Gender</option>
+                            <option value="Laki - Laki">Laki - Laki</option>
+                            <option value="Perempuan">Perempuan</option>
                         </select>
                         @error('gender')
                             <span class="text-red-500">{{ $message }}</span>
