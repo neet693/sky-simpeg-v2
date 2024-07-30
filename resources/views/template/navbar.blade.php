@@ -96,7 +96,7 @@
         <span>Detail Karyawan</span>
     </a>
 
-    <a href="#" class="sidebar-item" onclick="toggleActive(this)">
+    {{-- <a href="#" class="sidebar-item" onclick="toggleActive(this)">
         <!-- <img src="./assets/img/global/home.svg" alt=""> -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -107,9 +107,9 @@
         </svg>
 
         <span>Diklat</span>
-    </a>
+    </a> --}}
 
-    <a href="#" class="sidebar-item" onclick="toggleActive(this)">
+    {{-- <a href="#" class="sidebar-item" onclick="toggleActive(this)">
         <!-- <img src="./assets/img/global/gift.svg" alt=""> -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20 12V22H4V12" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round"
@@ -126,7 +126,7 @@
         </svg>
 
         <span>History Pendidikan</span>
-    </a>
+    </a> --}}
 
     <a href="{{ route('profile.show') }}" class="sidebar-item" onclick="toggleActive(this)">
         <!-- <img src="./assets/img/global/settings.svg" alt=""> -->

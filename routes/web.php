@@ -37,5 +37,6 @@ Route::middleware([
     // Route untuk menyimpan atau memperbarui detail pekerjaan
     Route::post('/employees/{employee_number}/employment-details', [EmploymentDetailController::class, 'storeOrUpdate'])->name('employment_detail.store');
 
-    Route::post('/employees/{employee_number}/employee-certificates', [EmployeeCertificationController::class, 'storeOrUpdate'])->name('employee_certification.store');
+    Route::post('/employees/{employee_number}/employee-certificates', [EmployeeCertificationController::class, 'store'])->name('employee_certification.store');
+    Route::put('/employees/{employee_number}/employee-certificates/{certificate}', [EmployeeCertificationController::class, 'update'])->name('employee_certification.update');
 });

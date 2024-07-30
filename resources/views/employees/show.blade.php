@@ -78,63 +78,100 @@
     </div>
     {{-- End --}}
 
+
+
     {{-- Diklat Pegawai --}}
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center">
             <h3 class="text-xl font-semibold">Diklat Pegawai</h3>
-            <button id="openDiklatModalButton" class="btn btn-primary">Tambah / Edit</button>
+            <button id="openDiklatModalButton" class="btn btn-primary">Tambah</button>
+            @include('components.modal-employee-certificates')
+        </div>
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="space-y-4">
+                @forelse ($employee->employeeCertificates as $certificate)
+                    <div class="p-4 border rounded-lg shadow-lg flex">
+                        <div class="w-16 h-16 mr-4">
+                            <img src="{{ Storage::url($certificate->media) }}" alt="{{ $certificate->name }}"
+                                class="w-full h-full object-cover rounded">
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-semibold">{{ $certificate->name }}</h2>
+                            <p class="text-gray-600">{{ $certificate->organizer }}</p>
+                            <p class="text-gray-600">{{ $certificate->issued_date->format('M Y') }} -
+                                {{ $certificate->expired_date->format('M Y') }}</p>
+                            <p class="text-gray-600">Credential ID: {{ $certificate->credential_number }}</p>
+                            <a href="{{ $certificate->certificate_url }}" class="text-blue-500 hover:underline">Show
+                                credential</a>
+                        </div>
+
+                        <a href="#" data-modal-toggle="diklatModal{{ $certificate->name }}"
+                            class="btn btn-primary">Edit</a>
+                        @include('components.modal-edit-employee-certificates', [
+                            'employee_number' => $employee->employee_number,
+                            'certificate' => $certificate,
+                        ])
+                    </div>
+                @empty
+                    <p class="text-gray-500">No
+                        Certificate Found. Try Upload one.</p>
+                @endforelse
+            </div>
+        </div>
+    </div>
+    {{-- End --}}
+
+    {{-- Riwayat Pendidikan --}}
+    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+        <div class="flex justify-between items-center">
+            <h3 class="text-xl font-semibold">Riwayat Pendidikan</h3>
+            <button id="openDiklatModalButton" class="btn btn-primary">Tambah</button>
+            <button id="openEditDiklatModalButton" class="btn btn-primary">Edit</button>
         </div>
 
         @include('components.modal-employee-certificates')
 
-        <div class="mt-4 space-y-4">
-            @forelse ($employee->employeeCertificates as $certificate)
-                <div class="flex items-center">
-                    <div class="w-3/4">
-                        <p class="font-semibold">
-                            {{ $certificate->name }}
-                        </p>
-                    </div>
-
-                </div>
-                <div class="flex items-center">
-                    <div class="w-3/4">
-                        <p class="text-grey-600">
-                            {{ $certificate->organizer }}
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <div class="w-1/4">
-                        <p class="text-gray-500">Issued {{ $certificate->issued_date->format('M Y') }} -
-                            {{ $certificate->expired_date->format('M Y') }}</p>
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <div class="w-1/4">
-                        <p class="text-gray-500">Credential ID {{ $certificate->credential_number }}</p>
-                    </div>
-                </div>
-
-                <div class="flex items-center">
-                    <div class="w-1/4">
-                        <a href="{{ $certificate->certificate_url }}" target="_blank" class="btn btn-primary">Lihat
-                            Online</a>
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <div class="w-3/4">
-                        @if ($certificate->media)
+        <div class="max-w-4xl mx-auto p-6">
+            @include('components.modal-edit-employee-certificates')
+            <div class="space-y-4">
+                @forelse ($employee->employeeCertificates as $certificate)
+                    <div class="p-4 border rounded-lg shadow-lg flex">
+                        <div class="w-16 h-16 mr-4">
                             <img src="{{ Storage::url($certificate->media) }}" alt="{{ $certificate->name }}"
-                                class="w-full h-auto">
-                        @endif
+                                class="w-full h-full object-cover rounded">
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-semibold">{{ $certificate->name }}</h2>
+                            <p class="text-gray-600">{{ $certificate->organizer }}</p>
+                            <p class="text-gray-600">{{ $certificate->issued_date->format('M Y') }} -
+                                {{ $certificate->expired_date->format('M Y') }}</p>
+                            <p class="text-gray-600">Credential ID: {{ $certificate->credential_number }}</p>
+                            <a href="{{ $certificate->certificate_url }}" class="text-blue-500 hover:underline">Show
+                                credential</a>
+                        </div>
                     </div>
-                </div>
-            @empty
-                <p class="text-gray-500">No Certificate Found. Try Upload one.</p>
-            @endforelse
-
+                @empty
+                    <p class="text-gray-500">No Certificate Found. Try Upload one.</p>
+                @endforelse
+            </div>
         </div>
     </div>
     {{-- End --}}
+
+
+    <script>
+        document.querySelectorAll('[id^="openEditDiklatModalButton"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                document.querySelector(targetId).classList.remove('hidden');
+            });
+        });
+
+        document.querySelectorAll('[id^="closeEditDiklatModalButton"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-target');
+                document.querySelector(modalId).classList.add('hidden');
+            });
+        });
+    </script>
 @endsection
