@@ -124,15 +124,11 @@
     {{-- Riwayat Pendidikan --}}
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center">
-            <h3 class="text-xl font-semibold">Riwayat Pendidikan</h3>
+            <h3 class="text-xl font-semibold">Diklat Pegawai</h3>
             <button id="openDiklatModalButton" class="btn btn-primary">Tambah</button>
-            <button id="openEditDiklatModalButton" class="btn btn-primary">Edit</button>
+            @include('components.modal-employee-certificates')
         </div>
-
-        @include('components.modal-employee-certificates')
-
         <div class="max-w-4xl mx-auto p-6">
-            @include('components.modal-edit-employee-certificates')
             <div class="space-y-4">
                 @forelse ($employee->employeeCertificates as $certificate)
                     <div class="p-4 border rounded-lg shadow-lg flex">
@@ -149,9 +145,17 @@
                             <a href="{{ $certificate->certificate_url }}" class="text-blue-500 hover:underline">Show
                                 credential</a>
                         </div>
+
+                        <a href="#" data-modal-toggle="diklatModal{{ $certificate->name }}"
+                            class="btn btn-primary">Edit</a>
+                        @include('components.modal-edit-employee-certificates', [
+                            'employee_number' => $employee->employee_number,
+                            'certificate' => $certificate,
+                        ])
                     </div>
                 @empty
-                    <p class="text-gray-500">No Certificate Found. Try Upload one.</p>
+                    <p class="text-gray-500">No
+                        Certificate Found. Try Upload one.</p>
                 @endforelse
             </div>
         </div>

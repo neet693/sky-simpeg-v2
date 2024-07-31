@@ -58,12 +58,12 @@
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <a href="{{ route('login') }}" class="btn btn-master btn-success me-3">
+                    <a href="{{ route('login') }}" class="btn btn-master btn-login me-3">
                         Masuk
                     </a>
-                    <a href="#" class="btn btn-master btn-login">
+                    {{-- <a href="#" class="btn btn-master btn-login">
                         Daftar PPDB
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>
