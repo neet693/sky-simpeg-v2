@@ -47,7 +47,8 @@
         @foreach ($employees as $employee)
             <div class="col-3">
                 <div class="employee-card">
-                    <img class="employee-img" src="{{ $employee->profile_photo_url }}" alt="Employee Photo">
+                    <img class="employee-img" src="{{ Storage::url($employee->profile_photo_path) }}"
+                        alt="Employee Photo">
                     <h2 class="employee-name">{{ $employee->name }}</h2>
                     <span class="employee-role">{{ $employee->employee_number }}</span>
                     @if ($employee->verified)
