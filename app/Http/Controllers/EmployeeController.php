@@ -40,6 +40,7 @@ class EmployeeController extends Controller
     {
         $employee = User::where('employee_number', $employee_number)
             ->with('employeeCertificates')
+            ->with('educationHistories')
             ->firstOrFail();
         $units = unit::all();
         $users = User::all();

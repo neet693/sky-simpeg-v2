@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(EmployeeCertification::class, 'employee_number', 'employee_number');
     }
+
+    public function educationHistories()
+    {
+        return $this->hasMany(EmployeeEducation::class, 'employee_number', 'employee_number');
+    }
 }

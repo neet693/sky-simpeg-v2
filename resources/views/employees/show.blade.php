@@ -84,18 +84,20 @@
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center">
             <h3 class="text-xl font-semibold">Diklat Pegawai</h3>
-            <button id="openDiklatModalButton" class="btn btn-primary">Tambah</button>
+            <button id="openDiklatModalButton" class="btn btn-statistic">
+                <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
+            </button>
             @include('components.modal-employee-certificates')
         </div>
         <div class="max-w-4xl mx-auto p-6">
             <div class="space-y-4">
                 @forelse ($employee->employeeCertificates as $certificate)
-                    <div class="p-4 border rounded-lg shadow-lg flex">
+                    <div class="relative p-4 border rounded-lg shadow-lg flex">
                         <div class="w-16 h-16 mr-4">
                             <img src="{{ Storage::url($certificate->media) }}" alt="{{ $certificate->name }}"
                                 class="w-full h-full object-cover rounded">
                         </div>
-                        <div>
+                        <div class="flex-grow">
                             <h2 class="text-lg font-semibold">{{ $certificate->name }}</h2>
                             <p class="text-gray-600">{{ $certificate->organizer }}</p>
                             <p class="text-gray-600">{{ $certificate->issued_date->format('M Y') }} -
@@ -105,13 +107,22 @@
                                 credential</a>
                         </div>
 
+                        <!-- Edit Button -->
                         <a href="#" data-modal-toggle="diklatModal{{ $certificate->name }}"
-                            class="btn btn-primary">Edit</a>
+                            class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                        </a>
+
                         @include('components.modal-edit-employee-certificates', [
                             'employee_number' => $employee->employee_number,
                             'certificate' => $certificate,
                         ])
                     </div>
+
                 @empty
                     <p class="text-gray-500">No
                         Certificate Found. Try Upload one.</p>
@@ -124,38 +135,47 @@
     {{-- Riwayat Pendidikan --}}
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center">
-            <h3 class="text-xl font-semibold">Diklat Pegawai</h3>
-            <button id="openDiklatModalButton" class="btn btn-primary">Tambah</button>
-            @include('components.modal-employee-certificates')
+            <h3 class="text-xl font-semibold">Riwayat Pendidikan Pegawai</h3>
+            <button id="openEducationModalButton" class="btn btn-statistic">
+                <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
+            </button>
+            @include('components.modal-employee-education')
         </div>
         <div class="max-w-4xl mx-auto p-6">
             <div class="space-y-4">
-                @forelse ($employee->employeeCertificates as $certificate)
-                    <div class="p-4 border rounded-lg shadow-lg flex">
-                        <div class="w-16 h-16 mr-4">
-                            <img src="{{ Storage::url($certificate->media) }}" alt="{{ $certificate->name }}"
-                                class="w-full h-full object-cover rounded">
-                        </div>
-                        <div>
-                            <h2 class="text-lg font-semibold">{{ $certificate->name }}</h2>
-                            <p class="text-gray-600">{{ $certificate->organizer }}</p>
-                            <p class="text-gray-600">{{ $certificate->issued_date->format('M Y') }} -
-                                {{ $certificate->expired_date->format('M Y') }}</p>
-                            <p class="text-gray-600">Credential ID: {{ $certificate->credential_number }}</p>
-                            <a href="{{ $certificate->certificate_url }}" class="text-blue-500 hover:underline">Show
-                                credential</a>
+                @forelse ($employee->educationHistories as $education)
+                    <div class="relative p-4 border rounded-lg shadow-lg flex">
+                        {{-- <div class="w-16 h-16 mr-4">
+                        <img src="{{ Storage::url($education->media) }}" alt="{{ $education->name }}"
+                            class="w-full h-full object-cover rounded">
+                        </div> --}}
+                        <div class="flex-grow">
+                            <h2 class="text-lg font-semibold">{{ $education->institution }}</h2>
+                            <p class="text-gray-600">{{ $education->degree }}</p>
+                            <p class="text-gray-600">{{ $education->field }}</p>
+                            <p class="text-gray-600">{{ $education->start_date->format('M Y') }} -
+                                {{ $education->end_date->format('M Y') }}</p>
+                            <p class="text-gray-600">Description: {{ $education->description }}</p>
                         </div>
 
-                        <a href="#" data-modal-toggle="diklatModal{{ $certificate->name }}"
-                            class="btn btn-primary">Edit</a>
-                        @include('components.modal-edit-employee-certificates', [
+                        <!-- Edit Button -->
+                        <a href="#" data-modal-toggle="diklatModal{{ $education->id }}"
+                            class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+
+                        </a>
+                        @include('components.modal-edit-employee-education', [
                             'employee_number' => $employee->employee_number,
-                            'certificate' => $certificate,
+                            'education' => $education,
                         ])
                     </div>
+
                 @empty
-                    <p class="text-gray-500">No
-                        Certificate Found. Try Upload one.</p>
+                    <p class="text-gray-500">Education History not found. Try Upload one.</p>
                 @endforelse
             </div>
         </div>

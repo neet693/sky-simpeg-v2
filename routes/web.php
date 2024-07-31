@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeCertificationController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeEducationController;
 use App\Http\Controllers\EmploymentDetailController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,9 +35,12 @@ Route::middleware([
     // Route untuk menampilkan detail karyawan
     Route::get('/employees/{employee_number}', [EmployeeController::class, 'show'])->name('employee.show');
 
-    // Route untuk menyimpan atau memperbarui detail pekerjaan
+    // Route Employee Detail
     Route::post('/employees/{employee_number}/employment-details', [EmploymentDetailController::class, 'storeOrUpdate'])->name('employment_detail.store');
-
+    //Route Certificate
     Route::post('/employees/{employee_number}/employee-certificates', [EmployeeCertificationController::class, 'store'])->name('employee_certification.store');
     Route::put('/employees/{employee_number}/employee-certificates/{certificate}', [EmployeeCertificationController::class, 'update'])->name('employee_certification.update');
+    // Route Education
+    Route::post('/employees/{employee_number}/education-histories', [EmployeeEducationController::class, 'store'])->name('education_history.store');
+    Route::put('/employees/{employee_number}/education-histories/{id}', [EmployeeEducationController::class, 'update'])->name('education_history.update');
 });
