@@ -480,3 +480,11 @@ aside #toggle-navbar {
     justify-content: center;
     align-items: center;
 }
+
+.task {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    cursor: grab;
+}

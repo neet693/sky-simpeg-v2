@@ -4,6 +4,7 @@ use App\Http\Controllers\EmployeeCertificationController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeEducationController;
 use App\Http\Controllers\EmploymentDetailController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,11 @@ Route::middleware([
     Route::get('/employees', function () {
         return view('employees.index');
     })->name('employees');
+
+    //Route Task Kanban
+    Route::resource('tasks', TaskController::class);
+    // Route::post('/update-task-order', [TaskController::class, 'updateOrder']);
+    Route::post('/update-task-order', [TaskController::class, 'updateTaskOrder']);
     // Route untuk menampilkan detail karyawan
     Route::get('/employees/{employee_number}', [EmployeeController::class, 'show'])->name('employee.show');
 

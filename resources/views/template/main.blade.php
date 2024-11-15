@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" href="{{ asset('template/css/template-dashboard.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
     <title>SKY SIMPEG</title>
 </head>
@@ -35,6 +37,8 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
 
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
     <script>
         const navbar = document.querySelector('.col-navbar')
         const cover = document.querySelector('.screen-cover')
@@ -55,22 +59,81 @@
         }
     </script>
 
+    {{-- Script Table --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('aside');
-            const toggleNavbar = document.querySelector('#toggle-navbar');
-            const overlay = document.querySelector('.sidebar-overlay');
+        $(function() {
+            $(".taskColumn").sortable({
+                connectWith: ".taskColumn",
+                update: function(event, ui) {
+                    let tasks = [];
+                    $(this).children(".task").each(function(index, element) {
+                        tasks.push({
+                            id: $(element).data("id"),
+                            order: index,
+                            status: normalizeStatus($(this).parent().attr("id").replace(
+                                "Column", "")) // Status berdasarkan kolom
+                        });
+                    });
 
-            toggleNavbar.addEventListener('click', function() {
-                sidebar.classList.toggle('closed');
-                overlay.classList.toggle('active');
-            });
+                    // Debug: pastikan data yang dikirim sesuai
+                    console.log(tasks);
 
-            overlay.addEventListener('click', function() {
-                sidebar.classList.add('closed');
-                overlay.classList.remove('active');
+                    $.ajax({
+                        url: "/update-task-order",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            tasks: tasks
+                        },
+                        success: function(response) {
+                            console.log("Task order and status updated successfully.");
+                            updateTaskColumns(response.updatedTasks);
+                        },
+                        // error: function(xhr) {
+                        //     console.error("Error updating task order and status:", xhr
+                        //         .responseText);
+                        // }
+                    });
+                }
             });
         });
+
+        // Fungsi untuk normalisasi status
+        function normalizeStatus(status) {
+            if (status === "todo") {
+                return "To Do";
+            } else if (status === "inProgress") {
+                return "In Progress";
+            } else if (status === "done") {
+                return "Done";
+            }
+            return status;
+        }
+
+        // Fungsi untuk memperbarui kolom task dengan data terbaru
+        function updateTaskColumns(tasks) {
+            // Kosongkan kolom sebelum memperbarui
+            $('#todoColumn').empty();
+            $('#inProgressColumn').empty();
+            $('#doneColumn').empty();
+
+            // Pastikan task ditambahkan berdasarkan status yang benar
+            tasks.forEach(function(task) {
+                let taskElement = `<div class="task bg-white p-4 mb-4 rounded-lg shadow-lg cursor-grab hover:shadow-xl ui-sortable-handle"
+                                   data-id="${task.id}" data-order="${task.order}" data-status="${task.status}">
+                                    <p class="font-semibold">${task.title}</p>
+                                </div>`;
+
+                // Menambahkan task ke kolom yang sesuai berdasarkan status
+                if (task.status === 'To Do') {
+                    $('#todoColumn').append(taskElement);
+                } else if (task.status === 'In Progress') {
+                    $('#inProgressColumn').append(taskElement);
+                } else if (task.status === 'Done') {
+                    $('#doneColumn').append(taskElement);
+                }
+            });
+        }
     </script>
 
 

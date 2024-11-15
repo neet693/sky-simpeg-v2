@@ -66,6 +66,11 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
     public function employmentDetail()
     {
         return $this->hasOne(EmploymentDetail::class, 'employee_number', 'employee_number');
