@@ -62,6 +62,7 @@
     {{-- Script Table --}}
     <script>
         $(function() {
+            // 1. Inisialisasi sortable untuk drag-and-drop
             $(".taskColumn").sortable({
                 connectWith: ".taskColumn",
                 update: function(event, ui) {
@@ -71,13 +72,11 @@
                             id: $(element).data("id"),
                             order: index,
                             status: normalizeStatus($(this).parent().attr("id").replace(
-                                "Column", "")) // Status berdasarkan kolom
+                                "Column", ""))
                         });
                     });
 
-                    // Debug: pastikan data yang dikirim sesuai
-                    console.log(tasks);
-
+                    // Kirim perubahan ke server
                     $.ajax({
                         url: "/update-task-order",
                         type: "POST",
@@ -86,55 +85,131 @@
                             tasks: tasks
                         },
                         success: function(response) {
-                            console.log("Task order and status updated successfully.");
                             updateTaskColumns(response.updatedTasks);
                         },
-                        // error: function(xhr) {
-                        //     console.error("Error updating task order and status:", xhr
-                        //         .responseText);
-                        // }
+                        error: function(xhr) {
+                            console.error("Error updating task order and status:", xhr
+                                .responseText);
+                        }
                     });
                 }
             });
-        });
 
-        // Fungsi untuk normalisasi status
-        function normalizeStatus(status) {
-            if (status === "todo") {
-                return "To Do";
-            } else if (status === "inProgress") {
-                return "In Progress";
-            } else if (status === "done") {
-                return "Done";
-            }
-            return status;
-        }
+            // 2. Edit inline untuk task dengan double-click
+            $(document).on('dblclick', '.editable', function() {
+                let $this = $(this);
+                let originalValue = $this.text();
+                let taskElement = $this.closest('.task');
+                let field = $this.data('field');
 
-        // Fungsi untuk memperbarui kolom task dengan data terbaru
-        function updateTaskColumns(tasks) {
-            // Kosongkan kolom sebelum memperbarui
-            $('#todoColumn').empty();
-            $('#inProgressColumn').empty();
-            $('#doneColumn').empty();
+                // Ganti teks dengan input field untuk diedit
+                let input = $('<input>', {
+                    type: 'text',
+                    class: 'inline-edit',
+                    value: originalValue
+                });
 
-            // Pastikan task ditambahkan berdasarkan status yang benar
-            tasks.forEach(function(task) {
-                let taskElement = `<div class="task bg-white p-4 mb-4 rounded-lg shadow-lg cursor-grab hover:shadow-xl ui-sortable-handle"
-                                   data-id="${task.id}" data-order="${task.order}" data-status="${task.status}">
-                                    <p class="font-semibold">${task.title}</p>
-                                </div>`;
+                $this.replaceWith(input);
+                input.focus();
 
-                // Menambahkan task ke kolom yang sesuai berdasarkan status
-                if (task.status === 'To Do') {
-                    $('#todoColumn').append(taskElement);
-                } else if (task.status === 'In Progress') {
-                    $('#inProgressColumn').append(taskElement);
-                } else if (task.status === 'Done') {
-                    $('#doneColumn').append(taskElement);
-                }
+                // Event ketika selesai edit (blur)
+                input.on('blur', function() {
+                    let newValue = input.val();
+
+                    if (newValue === originalValue) {
+                        input.replaceWith(
+                            `<p class="editable font-semibold" data-field="${field}">${originalValue}</p>`
+                        );
+                        return;
+                    }
+
+                    // Kirim perubahan ke server
+                    $.ajax({
+                        url: '/update-task-inline',
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: taskElement.data('id'),
+                            field: field,
+                            value: newValue
+                        },
+                        success: function(response) {
+                            input.replaceWith(
+                                `<p class="editable font-semibold" data-field="${field}">${newValue}</p>`
+                            );
+                        },
+                        error: function(xhr) {
+                            console.error("Error updating task:", xhr.responseText);
+                            input.replaceWith(
+                                `<p class="editable font-semibold" data-field="${field}">${originalValue}</p>`
+                            );
+                        }
+                    });
+                });
+
+                // Event ketika menekan Enter untuk menyimpan
+                input.on('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        input.blur();
+                    }
+                });
             });
-        }
+
+            // 3. Fungsi untuk normalisasi status
+            function normalizeStatus(status) {
+                if (status === "todo") {
+                    return "To Do";
+                } else if (status === "inProgress") {
+                    return "In Progress";
+                } else if (status === "done") {
+                    return "Done";
+                }
+                return status;
+            }
+
+            // 4. Fungsi untuk memperbarui kolom task dengan data terbaru
+            function updateTaskColumns(tasks) {
+                $('#todoColumn').empty();
+                $('#inProgressColumn').empty();
+                $('#doneColumn').empty();
+
+                tasks.forEach(function(task) {
+                    let title = task.title ?? "Tambah Title";
+                    let description = task.description ?? "Tambah Description";
+                    let taskElement = `
+                        <div class="task bg-white p-4 mb-4 rounded-lg shadow-lg cursor-grab hover:shadow-xl ui-sortable-handle"
+                             data-id="${task.id}" data-order="${task.order}" data-status="${task.status}">
+                            ${title !== "" ? `<p class="font-semibold editable" data-field="title">${title}</p>` : ""}
+                            ${description !== "" ? `<p class="font-semibold editable" data-field="description">${description}</p>` : ""}
+                            <button class="text-red-600 delete-task" data-id="${task.id}">
+                                Hapus
+                            </button>
+                        </div>`;
+
+                    if (task.status === 'To Do') {
+                        $('#todoColumn').append(taskElement);
+                    } else if (task.status === 'In Progress') {
+                        $('#inProgressColumn').append(taskElement);
+                    } else if (task.status === 'Done') {
+                        $('#doneColumn').append(taskElement);
+                    }
+                });
+            }
+
+            // 5. Event handler untuk tombol hapus
+            $(document).on('click', '.delete-task', function() {
+                const taskId = $(this).data('id');
+
+                // Trigger penghapusan task melalui Livewire
+                Livewire.dispatch('deleteTask', taskId);
+
+                // Menghapus elemen task dari DOM setelah dihapus di server
+                $(`.task[data-id="${taskId}"]`).remove();
+            });
+        });
     </script>
+
+
 
 
 </body>

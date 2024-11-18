@@ -83,4 +83,24 @@ class TaskController extends Controller
         // Kembalikan data task yang telah terupdate
         return response()->json(['updatedTasks' => $updatedTasks]);
     }
+
+    public function updateTaskInline(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer|exists:tasks,id',
+            'field' => 'required|string|in:title,description',
+            'value' => 'required|string|max:255',
+        ]);
+
+        $task = Task::find($request->id);
+        if ($task) {
+            $field = $request->field;
+            $task->$field = $request->value; // Update field yang relevan
+            $task->save();
+
+            return response()->json(['success' => true, 'task' => $task]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Task not found'], 404);
+    }
 }

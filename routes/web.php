@@ -38,6 +38,8 @@ Route::middleware([
     Route::resource('tasks', TaskController::class);
     // Route::post('/update-task-order', [TaskController::class, 'updateOrder']);
     Route::post('/update-task-order', [TaskController::class, 'updateTaskOrder']);
+    Route::post('/update-task-inline', [TaskController::class, 'updateTaskInline']);
+
     // Route untuk menampilkan detail karyawan
     Route::get('/employees/{employee_number}', [EmployeeController::class, 'show'])->name('employee.show');
 

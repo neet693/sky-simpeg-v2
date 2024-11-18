@@ -488,3 +488,13 @@ aside #toggle-navbar {
     background-color: #f9f9f9;
     cursor: grab;
 }
+
+.editable {
+    cursor: pointer; /* Tunjukkan bahwa elemen dapat diklik */
+}
+
+.inline-edit {
+    width: 100%;
+    font-size: inherit;
+    padding: 2px;
+}
