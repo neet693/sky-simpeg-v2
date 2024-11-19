@@ -1,4 +1,4 @@
-@foreach ($employee->spouses as $spouse)
+@foreach ($employee->employeeSpouses as $spouse)
     <div id="spouseModal{{ $spouse->id }}" class="fixed z-10 inset-0 overflow-y-auto hidden">
         <div class="fixed inset-0 flex items-center justify-center">
             <div class="fixed inset-0 bg-gray-500 opacity-75"></div>

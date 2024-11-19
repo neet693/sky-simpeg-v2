@@ -39,8 +39,7 @@ class EmployeeController extends Controller
     public function show($employee_number)
     {
         $employee = User::where('employee_number', $employee_number)
-            ->with('employeeCertificates')
-            ->with('educationHistories')
+            ->with(['employeeCertificates', 'educationHistories', 'employeeSpouses'])
             ->firstOrFail();
         $units = unit::all();
         $users = User::all();

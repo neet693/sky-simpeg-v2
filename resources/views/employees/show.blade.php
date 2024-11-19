@@ -191,13 +191,14 @@
         </div>
         <div class="max-w-4xl mx-auto p-6">
             <div class="space-y-4">
-                @if ($employee->spouse)
+                @forelse ($employee->employeeSpouses as $spouse)
                     <div class="relative p-4 border rounded-lg shadow-lg flex">
                         <div class="flex-grow">
-                            <h2 class="text-lg font-semibold">{{ $employee->spouse->name }}</h2>
-                            <p class="text-gray-600">Tanggal Lahir: {{ $employee->spouse->birth_date->format('d M Y') }}
+                            <h2 class="text-lg font-semibold">{{ $spouse->name }}</h2>
+                            <p class="text-gray-600">
+                                Tanggal Lahir: {{ $spouse->birth_date ? $spouse->birth_date->format('d M Y') : 'N/A' }}
                             </p>
-                            <p class="text-gray-600">Pekerjaan: {{ $employee->spouse->occupation }}</p>
+                            <p class="text-gray-600">Pekerjaan: {{ $spouse->occupation ?? 'N/A' }}</p>
                         </div>
                         <a href="#" data-modal-toggle="spouseModal"
                             class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
@@ -207,15 +208,19 @@
                                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                             </svg>
                         </a>
-                        @include('components.modal-edit-employee-spouse', ['spouse' => $employee->spouse])
+                        @include('components.modal-edit-employee-spouse', [
+                            'employee_number' => $employee->employee_number,
+                            'spouse' => $spouse,
+                        ])
                     </div>
-                @else
+                @empty
                     <p class="text-gray-500">Informasi Suami/Istri tidak tersedia.</p>
-                @endif
+                @endforelse
             </div>
         </div>
     </div>
     {{-- End --}}
+
 
     {{-- Informasi Anak --}}
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">

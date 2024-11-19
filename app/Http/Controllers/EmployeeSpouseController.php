@@ -42,7 +42,7 @@ class EmployeeSpouseController extends Controller
 
         $employee = User::where('employee_number', $employee_number)->firstOrFail();
 
-        $employee->employeeSpouse()->create($request->all());
+        $employee->employeeSpouses()->create($request->all());
 
         return redirect()->back()->with('message', 'Education history added successfully.');
     }
