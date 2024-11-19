@@ -14,7 +14,7 @@ class TaskList extends Component
     protected $listeners = [
         'taskAdded' => 'refreshTasks',
         'updateTaskOrder' => 'updateTaskOrder',
-        'deleteTask' => 'deleteTask',  // Tambahkan listener untuk penghapusan task
+        'deleteTask' => 'deleteTask',
     ];
 
     public function mount()
@@ -35,11 +35,10 @@ class TaskList extends Component
 
     public function deleteTask($taskId)
     {
-        // Menghapus task berdasarkan taskId yang diterima
         $task = Task::find($taskId);
         if ($task) {
             $task->delete();
-            $this->tasks = $this->tasks->where('id', '!=', $taskId); // Menghapus task dari list yang sudah ada
+            $this->refreshTasks();  // Memperbarui daftar tasks setelah penghapusan
         }
     }
 

@@ -78,8 +78,6 @@
     </div>
     {{-- End --}}
 
-
-
     {{-- Diklat Pegawai --}}
     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center">
@@ -182,6 +180,79 @@
     </div>
     {{-- End --}}
 
+    {{-- Informasi Suami/Istri --}}
+    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+        <div class="flex justify-between items-center">
+            <h3 class="text-xl font-semibold">Informasi Suami/Istri</h3>
+            <button id="openSpouseModalButton" class="btn btn-statistic">
+                <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
+            </button>
+            @include('components.modal-employee-spouse')
+        </div>
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="space-y-4">
+                @if ($employee->spouse)
+                    <div class="relative p-4 border rounded-lg shadow-lg flex">
+                        <div class="flex-grow">
+                            <h2 class="text-lg font-semibold">{{ $employee->spouse->name }}</h2>
+                            <p class="text-gray-600">Tanggal Lahir: {{ $employee->spouse->birth_date->format('d M Y') }}
+                            </p>
+                            <p class="text-gray-600">Pekerjaan: {{ $employee->spouse->occupation }}</p>
+                        </div>
+                        <a href="#" data-modal-toggle="spouseModal"
+                            class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                        </a>
+                        @include('components.modal-edit-employee-spouse', ['spouse' => $employee->spouse])
+                    </div>
+                @else
+                    <p class="text-gray-500">Informasi Suami/Istri tidak tersedia.</p>
+                @endif
+            </div>
+        </div>
+    </div>
+    {{-- End --}}
+
+    {{-- Informasi Anak --}}
+    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+        <div class="flex justify-between items-center">
+            <h3 class="text-xl font-semibold">Informasi Anak</h3>
+            <button id="openChildModalButton" class="btn btn-statistic">
+                <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
+            </button>
+            @include('components.modal-employee-children')
+        </div>
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="space-y-4">
+                @if ($employee->children)
+                    <div class="relative p-4 border rounded-lg shadow-lg flex">
+                        <div class="flex-grow">
+                            <h2 class="text-lg font-semibold">{{ $employee->children->name }}</h2>
+                            <p class="text-gray-600">Tanggal Lahir: {{ $employee->children->birth_date->format('d M Y') }}
+                            </p>
+                            <p class="text-gray-600">Jenis Kelamin: {{ $employee->children->gender }}</p>
+                        </div>
+                        <a href="#" data-modal-toggle="childModal{{ $child->id }}"
+                            class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                        </a>
+                        @include('components.modal-edit-employee-child', ['child' => $employee->children])
+                    </div>
+                @else
+                    <p class="text-gray-500">Informasi Anak tidak tersedia.</p>
+                @endif
+            </div>
+        </div>
+    </div>
+    {{-- End --}}
 
     <script>
         document.querySelectorAll('[id^="openEditDiklatModalButton"]').forEach(button => {

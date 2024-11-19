@@ -201,7 +201,9 @@
                 const taskId = $(this).data('id');
 
                 // Trigger penghapusan task melalui Livewire
-                Livewire.dispatch('deleteTask', taskId);
+                Livewire.dispatch('deleteTask', {
+                    taskId: taskId
+                });
 
                 // Menghapus elemen task dari DOM setelah dihapus di server
                 $(`.task[data-id="${taskId}"]`).remove();

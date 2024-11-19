@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\EmployeeCertificationController;
+use App\Http\Controllers\EmployeeChildrenController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeEducationController;
+use App\Http\Controllers\EmployeeSpouseController;
 use App\Http\Controllers\EmploymentDetailController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -51,4 +53,12 @@ Route::middleware([
     // Route Education
     Route::post('/employees/{employee_number}/education-histories', [EmployeeEducationController::class, 'store'])->name('education_history.store');
     Route::put('/employees/{employee_number}/education-histories/{id}', [EmployeeEducationController::class, 'update'])->name('education_history.update');
+
+    // Route Spouse
+    Route::post('/employees/{employee_number}/employee-spouse', [EmployeeSpouseController::class, 'store'])->name('employee.spouse.store');
+    Route::put('/employees/{employee_number}/employee-spouse/{id}', [EmployeeSpouseController::class, 'update'])->name('employee.spouse.update');
+
+    // Route Children
+    Route::post('/employees/{employee_number}/employee-children', [EmployeeChildrenController::class, 'store'])->name('employee.children.store');
+    Route::put('/employees/{employee_number}/employee-children/{id}', [EmployeeChildrenController::class, 'update'])->name('employee.children.update');
 });
