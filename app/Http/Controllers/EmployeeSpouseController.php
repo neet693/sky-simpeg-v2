@@ -69,7 +69,7 @@ class EmployeeSpouseController extends Controller
     public function update(Request $request, $employee_number, $id)
     {
         $request->validate([
-            'spouse_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'birth_place' => 'required|string|max:255',
             'birth_date' => 'required|date',
             'gender' => 'required|string|max:255',
