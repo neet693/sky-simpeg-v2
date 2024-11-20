@@ -15,14 +15,14 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'name' => 'Administrator',
-            'employee_number' => 'sky-001',
-            'email' => 'admin@sky.com',
+            'employee_number' => 'employee-001',
+            'email' => 'admin@admin.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('rusakdeh'),
+            'password' => bcrypt('password'),
             'role' => 'admin',
-            'birth_date' => '1999-07-19',
-            'phone_number' => '082350496224',
-            'address' => 'Jl. L. L. R. E. Martadinata No. 71A - 73',
+            'birth_date' => '2024-11-20',
+            'phone_number' => 'No. Telp',
+            'address' => 'Alamat',
         ]);
     }
 }
