@@ -2,8 +2,8 @@
 <div>
     <div class="row">
         <div class="col-6">
-            <h2 class="content-title">Statistics</h2>
-            <h5 class="content-desc mb-4">Your business growth</h5>
+            <h2 class="content-title">List Karyawan</h2>
+            <h5 class="content-desc mb-4">Lihat Partner Kerja Anda</h5>
         </div>
         <div class="col-6 d-flex justify-content-end">
             @livewire('add-employee-modal')

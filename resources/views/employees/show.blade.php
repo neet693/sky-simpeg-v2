@@ -31,7 +31,10 @@
                 </div>
                 <div>
                     <p class="text-gray-600">Status Perkawinan</p>
-                    <p class="font-semibold">{{ $employee->employeeSpouses ? 'Sudah Menikah' : 'Belum Menikah' }}</p>
+                    <p class="font-semibold">
+                        {{ $employee->employeeSpouses->isEmpty() ? 'Belum Menikah' : 'Sudah Menikah' }}
+                    </p>
+
                 </div>
                 <div>
                     <p class="text-gray-600">Alamat</p>
