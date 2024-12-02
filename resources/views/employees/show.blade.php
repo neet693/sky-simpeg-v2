@@ -3,7 +3,10 @@
     {{-- Profile Pegawai --}}
     <div class="bg-white p-6 rounded-lg shadow-md">
         <div class="flex items-center space-x-4">
-            <img src="{{ Storage::url($employee->profile_photo_path) }}" alt="Profile Photo" class="w-24 h-24 rounded-full">
+            <img src="{{ $employee->profile_photo_path
+                ? Storage::url($employee->profile_photo_path)
+                : 'https://ui-avatars.com/api/?name=' . urlencode($employee->name) . '&color=7F9CF5&background=EBF4FF' }}"
+                alt="{{ $employee->name }}" class="w-24 h-24 rounded-full">
             <div>
                 <h2 class="text-2xl font-semibold">{{ $employee->name }}</h2>
                 <p class="text-gray-600">{{ $employee->email }}</p>
@@ -331,9 +334,9 @@
                 button.addEventListener("click", function() {
                     const targetId = this.getAttribute("data-target"); // Get the target ID
                     const tabContainer = this.closest(
-                    ".tabs-education, .tabs-family"); // Limit to specific tab groups
+                        ".tabs-education, .tabs-family"); // Limit to specific tab groups
                     const contentContainer = tabContainer
-                    .nextElementSibling; // Get the content area
+                        .nextElementSibling; // Get the content area
 
                     // Remove active class from all buttons
                     tabContainer.querySelectorAll(".tab-button").forEach((btn) => {

@@ -47,8 +47,10 @@
         @foreach ($employees as $employee)
             <div class="col-3">
                 <div class="employee-card">
-                    <img class="employee-img" src="{{ Storage::url($employee->profile_photo_path) }}"
-                        alt="Employee Photo">
+                    <img src="{{ $employee->profile_photo_path
+                        ? Storage::url($employee->profile_photo_path)
+                        : 'https://ui-avatars.com/api/?name=' . urlencode($employee->name) . '&color=7F9CF5&background=EBF4FF' }}"
+                        alt="{{ $employee->name }}" class="employee-img rounded-full">
                     <h2 class="employee-name">{{ $employee->name }}</h2>
                     <span class="employee-role">{{ $employee->employee_number }}</span>
                     @if ($employee->verified)
