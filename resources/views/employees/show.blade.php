@@ -51,10 +51,12 @@
             <div class="col-6">
                 <h3 class="text-xl font-semibold">Informasi Kepegawaian Yahya</h3>
             </div>
-            <div class="col-6 d-flex justify-content-end">
-                <button id="openEmployeeDetailModalButton" class="btn btn-primary">Tambah / Edit</button>
-            </div>
-            @include('components.modal-employment-detail')
+            @can('add-editProfile', $employee->employee_number)
+                <div class="col-6 d-flex justify-content-end">
+                    <button id="openEmployeeDetailModalButton" class="btn btn-primary">Tambah / Edit</button>
+                </div>
+                @include('components.modal-employment-detail')
+            @endcan
         </div>
 
         <div class="grid grid-cols-2 gap-4 mt-4">
@@ -108,11 +110,12 @@
                     <div class="flex justify-between items-center">
                         <h4 class="text-lg font-semibold">Informasi Pendidikan</h4>
 
-
-                        <button id="openEducationModalButton" class="btn btn-statistic">
-                            <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
-                        </button>
-                        @include('components.modal-employee-education')
+                        @can('add-editProfile', $employee->employee_number)
+                            <button id="openEducationModalButton" class="btn btn-statistic">
+                                <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
+                            </button>
+                            @include('components.modal-employee-education')
+                        @endcan
                     </div>
                     <div class="space-y-4 mt-4">
                         @forelse ($employee->educationHistories as $education)
@@ -130,20 +133,22 @@
                                     <p class="text-gray-600">Description: {{ $education->description }}</p>
                                 </div>
 
-                                <!-- Edit Button -->
-                                <a href="#" data-modal-toggle="diklatModal{{ $education->id }}"
-                                    class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
+                                @can('add-editProfile', $employee->employee_number)
+                                    <!-- Edit Button -->
+                                    <a href="#" data-modal-toggle="diklatModal{{ $education->id }}"
+                                        class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        </svg>
 
-                                </a>
-                                @include('components.modal-edit-employee-education', [
-                                    'employee_number' => $employee->employee_number,
-                                    'education' => $education,
-                                ])
+                                    </a>
+                                    @include('components.modal-edit-employee-education', [
+                                        'employee_number' => $employee->employee_number,
+                                        'education' => $education,
+                                    ])
+                                @endcan
                             </div>
 
                         @empty
@@ -156,10 +161,12 @@
                 <div id="diklatTab" class="tab-content hidden">
                     <div class="flex justify-between items-center">
                         <h4 class="text-lg font-semibold">Informasi Diklat</h4>
-                        <button id="openDiklatModalButton" class="btn btn-statistic">
-                            <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
-                        </button>
-                        @include('components.modal-employee-certificates')
+                        @can('add-editProfile', $employee->employee_number)
+                            <button id="openDiklatModalButton" class="btn btn-statistic">
+                                <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
+                            </button>
+                            @include('components.modal-employee-certificates')
+                        @endcan
                     </div>
                     <div class="space-y-4 mt-4">
                         @forelse ($employee->employeeCertificates as $certificate)
@@ -179,20 +186,23 @@
                                         credential</a>
                                 </div>
 
-                                <!-- Edit Button -->
-                                <a href="#" data-modal-toggle="diklatModal{{ $certificate->name }}"
-                                    class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
-                                </a>
+                                @can('add-editProfile', $employee->employee_number)
+                                    <!-- Edit Button -->
+                                    <a href="#" data-modal-toggle="diklatModal{{ $certificate->name }}"
+                                        class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        </svg>
+                                    </a>
 
-                                @include('components.modal-edit-employee-certificates', [
-                                    'employee_number' => $employee->employee_number,
-                                    'certificate' => $certificate,
-                                ])
+                                    @include('components.modal-edit-employee-certificates', [
+                                        'employee_number' => $employee->employee_number,
+                                        'certificate' => $certificate,
+                                    ])
+                                @endcan
+
                             </div>
 
                         @empty
@@ -226,10 +236,12 @@
                 <div id="spouseTab" class="tab-content active">
                     <div class="flex justify-between items-center">
                         <h4 class="text-lg font-semibold">Informasi Suami/Istri</h4>
-                        <button id="openSpouseModalButton" class="btn btn-statistic">
-                            <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
-                        </button>
-                        @include('components.modal-employee-spouse')
+                        @can('add-editProfile', $employee->employee_number)
+                            <button id="openSpouseModalButton" class="btn btn-statistic">
+                                <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
+                            </button>
+                            @include('components.modal-employee-spouse')
+                        @endcan
                     </div>
                     <div class="space-y-4 mt-4">
                         @forelse ($employee->employeeSpouses as $spouse)
@@ -243,20 +255,22 @@
                                     </p>
                                     <p class="text-gray-600">Status: {{ $spouse->notes ?? 'N/A' }}</p>
                                 </div>
-                                <a href="#" data-modal-toggle="spouseModal{{ $spouse->id }}"
-                                    class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
-                                </a>
-                                @foreach ($employee->employeeChilds as $child)
-                                    @include('components.modal-edit-employee-spouse', [
-                                        'employee_number' => $employee->employee_number,
-                                        'spouse' => $spouse,
-                                    ])
-                                @endforeach
+                                @can('add-editProfile', $employee->employee_number)
+                                    <a href="#" data-modal-toggle="spouseModal{{ $spouse->id }}"
+                                        class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        </svg>
+                                    </a>
+                                    @foreach ($employee->employeeChilds as $child)
+                                        @include('components.modal-edit-employee-spouse', [
+                                            'employee_number' => $employee->employee_number,
+                                            'spouse' => $spouse,
+                                        ])
+                                    @endforeach
+                                @endcan
                             </div>
                         @empty
                             <p class="text-gray-500">Informasi Suami/Istri tidak tersedia.</p>
@@ -268,10 +282,12 @@
                 <div id="childrenTab" class="tab-content hidden">
                     <div class="flex justify-between items-center">
                         <h4 class="text-lg font-semibold">Informasi Anak</h4>
-                        <button id="openChildrenModalButton" class="btn btn-statistic">
-                            <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
-                        </button>
-                        @include('components.modal-employee-children')
+                        @can('add-editProfile', $employee->employee_number)
+                            <button id="openChildrenModalButton" class="btn btn-statistic">
+                                <img src="{{ asset('template/assets/img/global/times.svg') }}" alt="">
+                            </button>
+                            @include('components.modal-employee-children')
+                        @endcan
                     </div>
                     <div class="space-y-4 mt-4">
                         @forelse ($employee->employeeChilds as $child)
@@ -284,20 +300,22 @@
                                     <p class="text-gray-600">Jenis Kelamin: {{ $child->gender }}</p>
                                     <p class="text-gray-600">Status: {{ $child->notes }}</p>
                                 </div>
-                                <a href="#" data-modal-toggle="childModal{{ $child->id }}"
-                                    class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
-                                </a>
-                                @foreach ($employee->employeeChilds as $child)
-                                    @include('components.modal-edit-employee-child', [
-                                        'employee_number' => $employee->employee_number,
-                                        'child' => $child,
-                                    ])
-                                @endforeach
+                                @can('add-editProfile', $employee->employee_number)
+                                    <a href="#" data-modal-toggle="childModal{{ $child->id }}"
+                                        class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        </svg>
+                                    </a>
+                                    @foreach ($employee->employeeChilds as $child)
+                                        @include('components.modal-edit-employee-child', [
+                                            'employee_number' => $employee->employee_number,
+                                            'child' => $child,
+                                        ])
+                                    @endforeach
+                                @endcan
                             </div>
                         @empty
                             <p class="text-gray-500">Informasi Anak tidak tersedia.</p>
@@ -310,24 +328,6 @@
     </div>
 
     <script>
-        // document.querySelectorAll('.tab-button').forEach(button => {
-        //     button.addEventListener('click', () => {
-        //         // Hapus kelas active dan background dari semua tombol
-        //         document.querySelectorAll('.tab-button').forEach(btn => {
-        //             btn.classList.remove('active', 'sidebar-item', 'text-white');
-        //         });
-
-        //         // Sembunyikan semua tab konten
-        //         document.querySelectorAll('.tab-content').forEach(content => content.classList.add(
-        //             'hidden'));
-
-        //         // Tambahkan kelas active, background, dan teks warna putih pada tombol yang dipilih
-        //         button.classList.add('active', 'sidebar-item', 'text-white');
-
-        //         // Tampilkan konten tab yang sesuai
-        //         document.querySelector(button.dataset.target).classList.remove('hidden');
-        //     });
-        // });
         document.addEventListener("DOMContentLoaded", function() {
             // Select all tab buttons
             const tabButtons = document.querySelectorAll(".tab-button");
