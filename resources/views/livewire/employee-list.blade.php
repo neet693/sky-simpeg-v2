@@ -1,16 +1,21 @@
 <!-- resources/views/livewire/employee-list.blade.php -->
 <div>
-    <div class="row">
-        <div class="col-6">
-            <h2 class="content-title">List Karyawan</h2>
-            <h5 class="content-desc mb-4">Lihat Partner Kerja Anda</h5>
+    @if ($isAdmin || $isKepala)
+        <div class="row">
+            <div class="col-6">
+                <h2 class="content-title">List Karyawan</h2>
+                <h5 class="content-desc mb-4">Lihat Partner Kerja Anda</h5>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                @livewire('add-employee-modal')
+            </div>
         </div>
-        <div class="col-6 d-flex justify-content-end">
-            @livewire('add-employee-modal')
-        </div>
+    @endif
 
+
+    <div class="row">
         <div class="col-12 col-md-6 col-lg-4">
-            <div class="statistics-card">
+            <div class="statistics-card" wire:click="filterByUnit(null)"style="cursor: pointer;">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex flex-column justify-content-between align-items-start">
                         <h5 class="content-desc">Total Employee</h5>
@@ -19,28 +24,18 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-md-6 col-lg-4">
-            <div class="statistics-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex flex-column justify-content-between align-items-start">
-                        <h5 class="content-desc">Active</h5>
-                        <h3 class="statistics-value">205,399</h5>
+        @foreach ($unitsWithCounts as $unitName => $count)
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="statistics-card" wire:click="filterByUnit('{{ $unitName }}')" style="cursor: pointer;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex flex-column justify-content-between align-items-start">
+                            <h5 class="content-desc">{{ $unitName }}</h5>
+                            <h3 class="statistics-value">{{ $count }}</h3>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-lg-4">
-            <div class="statistics-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex flex-column justify-content-between align-items-start">
-                        <h5 class="content-desc">Inactive</h5>
-                        <h3 class="statistics-value">142,593</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 
     <div class="row">

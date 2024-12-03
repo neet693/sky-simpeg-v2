@@ -1,5 +1,5 @@
 <aside class="sidebar">
-    <a href="#" class="sidebar-logo">
+    <a href="{{ route('dashboard') }}" class="sidebar-logo">
         <div class="d-flex justify-content-start align-items-center">
             <img src="{{ asset('template/assets/img/global/logo.svg') }}" alt="">
             <span>SKY SIMPEG</span>
@@ -12,7 +12,8 @@
 
     <h5 class="sidebar-title">Daily Use</h5>
 
-    <a href="{{ route('tasks.index') }}" class="sidebar-item {{ request()->routeIs('tasks.index') ? 'active' : '' }}"
+
+    <a href="{{ route('dashboard') }}" class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}"
         onclick="toggleActive(this)">
         <!-- <img src="./assets/img/global/grid.svg" alt=""> -->
 
@@ -26,49 +27,41 @@
             <path d="M10 3H3V10H10V3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
 
+        <span>Dashboard</span>
+    </a>
+
+    <a href="{{ route('tasks.index') }}" class="sidebar-item {{ request()->routeIs('tasks.index') ? 'active' : '' }}"
+        onclick="toggleActive(this)">
+        <!-- <img src="./assets/img/global/grid.svg" alt=""> -->
+
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+        </svg>
         <span>Kanban Board</span>
     </a>
-    @if (auth()->user()->role === 'admin')
-        <a href="{{ route('dashboard') }}" class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}"
-            onclick="toggleActive(this)">
-            <!-- <img src="./assets/img/global/grid.svg" alt=""> -->
 
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21 14H14V21H21V14Z" stroke="white" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M10 14H3V21H10V14Z" stroke="white" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M21 3H14V10H21V3Z" stroke="white" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M10 3H3V10H10V3Z" stroke="white" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
+    <!-- <a href="./employees.html" class="sidebar-item"> -->
+    <!-- <img src="./assets/img/global/users.svg" alt=""> -->
+    <a href="{{ route('employees') }}" class="sidebar-item {{ request()->routeIs('employees') ? 'active' : '' }}"
+        onclick="toggleActive(this)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+                d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+                d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+                d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
 
-            <span>Dashboard</span>
-        </a>
-
-        <!-- <a href="./employees.html" class="sidebar-item"> -->
-        <!-- <img src="./assets/img/global/users.svg" alt=""> -->
-        <a href="{{ route('employees') }}" class="sidebar-item {{ request()->routeIs('employees') ? 'active' : '' }}"
-            onclick="toggleActive(this)">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
-                    stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
-                    stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
-                    stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
-                    stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-
-            <span>Employees</span>
-        </a>
-    @endif
+        <span>Employees</span>
+    </a>
 
     {{-- <a href="#" class="sidebar-item" onclick="toggleActive(this)">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -107,8 +100,7 @@
                 stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <path d="M3.27002 6.96L12 12.01L20.73 6.96" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round" />
-            <path d="M12 22.08V12" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
+            <path d="M12 22.08V12" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
 
         <span>Detail Karyawan</span>

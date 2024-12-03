@@ -3,43 +3,70 @@
 namespace App\Livewire;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeList extends Component
 {
     public $employees;
     public $totalEmployees;
+    public $unitsWithCounts = []; // Untuk menyimpan jumlah pegawai per unit
+    public $selectedUnit = null; // Untuk sorting berdasarkan unit
+    public $isAdmin = false;
+    public $isKepala = false;
 
     protected $listeners = ['employeeAdded' => 'refreshEmployees'];
 
     public function mount()
     {
+        $this->checkUserRole();
         $this->refreshEmployees();
+    }
+
+    public function checkUserRole()
+    {
+        // Cek apakah user adalah admin atau kepala
+        $user = Auth::user();
+
+        if ($user) {
+            if ($user->role === 'admin') {
+                $this->isAdmin = true;
+            } elseif ($user->role === 'kepala') {
+                $this->isKepala = true;
+            }
+        }
     }
 
     public function refreshEmployees()
     {
-        $currentUser = Auth::user();
+        // Hitung total pegawai, kecuali admin
+        $this->totalEmployees = User::where('role', '!=', 'admin')->count();
 
-        if ($currentUser->role === 'admin' || $currentUser->role === 'HRD') {
-            // Admin atau HRD dapat melihat semua karyawan
-            $this->employees = User::with('employmentDetail')->get();
-            $this->totalEmployees = User::count();
-        } elseif ($currentUser->employmentDetail?->unit_id) {
-            // Hanya tampilkan karyawan dari unit yang sama
-            $this->employees = User::whereHas('employmentDetail', function ($query) use ($currentUser) {
-                $query->where('unit_id', $currentUser->employmentDetail->unit_id);
-            })->where('id', '!=', $currentUser->id) // Kecualikan pengguna login
-                ->with('employmentDetail') // Pastikan relasi di-load
-                ->get();
+        // Hitung jumlah pegawai per unit, kecuali admin
+        $this->unitsWithCounts = User::where('role', '!=', 'admin')
+            ->with('employmentDetail.unit')
+            ->get()
+            ->groupBy('employmentDetail.unit.name')
+            ->map(fn($group) => $group->count())
+            ->toArray();
 
-            $this->totalEmployees = $this->employees->count();
-        } else {
-            // Pengguna tanpa unit, daftar kosong
-            $this->employees = collect();
-            $this->totalEmployees = 0;
+        // Ambil pegawai, filter berdasarkan unit jika dipilih, kecuali admin
+        $query = User::query()->with('employmentDetail.unit')
+            ->where('role', '!=', 'admin');  // Menyaring role admin
+
+        if ($this->selectedUnit) {
+            $query->whereHas('employmentDetail.unit', function ($query) {
+                $query->where('name', $this->selectedUnit);
+            });
         }
+
+        $this->employees = $query->orderBy('name')->get();
+    }
+
+    public function filterByUnit($unitName)
+    {
+        $this->selectedUnit = $unitName;
+        $this->refreshEmployees();
     }
 
     public function render()

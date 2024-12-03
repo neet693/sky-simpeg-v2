@@ -7,6 +7,7 @@ use App\Http\Controllers\EmployeeEducationController;
 use App\Http\Controllers\EmployeeSpouseController;
 use App\Http\Controllers\EmploymentDetailController;
 use App\Http\Controllers\TaskController;
+use App\Livewire\EmployeeDashboards;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,9 +30,10 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('template.dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('template.dashboard');
+    // })->name('dashboard');
+    Route::get('/dashboard', EmployeeDashboards::class)->name('dashboard');
     Route::get('/employees', function () {
         return view('employees.index');
     })->name('employees');
