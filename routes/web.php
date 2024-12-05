@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\EmployeeCertificationController;
 use App\Http\Controllers\EmployeeChildrenController;
 use App\Http\Controllers\EmployeeController;
@@ -40,6 +41,7 @@ Route::middleware([
 
     //Route Task Kanban
     Route::resource('tasks', TaskController::class);
+    Route::resource('assignments', AssignmentController::class);
     // Route::post('/update-task-order', [TaskController::class, 'updateOrder']);
     Route::post('/update-task-order', [TaskController::class, 'updateTaskOrder']);
     Route::post('/update-task-inline', [TaskController::class, 'updateTaskInline']);
