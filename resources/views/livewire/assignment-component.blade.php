@@ -173,18 +173,19 @@
         <table class="min-w-full bg-white border border-gray-300">
             <thead>
                 <tr>
-                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">No</th>
-                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Judul
+                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Yang
+                        Bertugas
                     </th>
-                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Pemberi
-                    </th>
-                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Penerima
-                    </th>
-                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Unit
+                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Tugas
                     </th>
                     <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Tanggal
                     </th>
-                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Status
+                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Jam
+                    </th>
+                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">
+                        Oleh
+                    </th>
+                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Progres
                     </th>
                     <th class="px-6 py-3 border-b border-gray-300 text-center text-sm font-medium text-gray-700">Aksi
                     </th>
@@ -193,23 +194,31 @@
             <tbody>
                 @forelse ($assignments as $assignment)
                     <tr>
-                        <td class="px-6 py-3 border-b border-gray-300">{{ $loop->iteration }}</td>
+                        <td class="px-6 py-3 border-b border-gray-300">
+                            <img src="{{ $assignment->assignee?->user?->profile_photo_path
+                                ? Storage::url($assignment->assignee?->user?->profile_photo_path)
+                                : 'https://ui-avatars.com/api/?name=' .
+                                    urlencode($assignment->assignee?->user?->name) .
+                                    '&color=7F9CF5&background=EBF4FF' }}"
+                                alt="{{ $assignment->assignee?->user?->name }}"
+                                class="employee-img rounded-full w-16 h-16"
+                                title="{{ $assignment->assignee?->user?->name }}">
+                            {{-- {{ $assignment->assignee?->user?->name ?? 'Tidak Diketahui' }} --}}
+                        </td>
                         <td class="px-6 py-3 border-b border-gray-300">{{ $assignment->title }}</td>
-                        <td class="px-6 py-3 border-b border-gray-300">
-                            {{ $assignment->assigner?->user?->name ?? 'Tidak Diketahui' }}
-                        </td>
-                        <td class="px-6 py-3 border-b border-gray-300">
-                            {{ $assignment->assignee?->user?->name ?? 'Tidak Diketahui' }}
-                        </td>
-                        <td class="px-6 py-3 border-b border-gray-300">
-                            {{ $assignment->unit?->name ?? 'Tidak Diketahui' }}
-                        </td>
                         <td class="px-6 py-3 border-b border-gray-300">
                             {{ $assignment->assignment_date->format('d M Y') }}
                         </td>
                         <td class="px-6 py-3 border-b border-gray-300">
+                            {{ $assignment->start_time->format(' H:i') }} s/d
+                            {{ $assignment->end_time->format(' H:i') }}
+                        </td>
+                        <td class="px-6 py-3 border-b border-gray-300">
+                            {{ $assignment->assigner?->user?->name ?? 'Tidak Diketahui' }}
+                        </td>
+                        <td class="px-6 py-3 border-b border-gray-300">
                             <span
-                                class="px-2 py-1 text-xs font-medium text-white {{ $assignment->progress === 'Selesai' ? 'bg-green-500' : 'bg-yellow-500' }}">
+                                class="px-2 py-1 text-xs font-medium text-white {{ $assignment->progress === 'Selesai' ? 'bg-green-500' : 'bg-info' }}">
                                 {{ $assignment->progress }}
                             </span>
                         </td>

@@ -9,7 +9,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="statistics-card">
 
-                    @if ($isEmployee)
+                    @if ($isEmployee || $isKepala)
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex flex-column justify-content-between align-items-start">
                                 <h5 class="content-desc">Rekan Kerja</h5>
@@ -142,28 +142,44 @@
 
         <div class="row mt-5">
             <div class="col-12 col-lg-6">
-                <h2 class="content-title">Documents</h2>
-                <h5 class="content-desc mb-4">Standard procedure</h5>
+                <h2 class="content-title">Tugas dan Rapat</h2>
+                <h5 class="content-desc mb-4">List Rapat dan Tugas Anda!</h5>
 
                 <div class="document-card">
-                    <div class="document-item">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <div class="document-icon box">
-                                <img src="{{ asset('template/assets/img/home/document/archive.svg') }}" alt="">
+                    @forelse ($assignments as $assignment)
+                        <div class="document-item">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="d-flex flex-column justify-content-between align-items-start">
+                                    <h2 class="document-title">{{ $assignment->title }}</h2>
+                                    <span class="document-desc">Tanggal:
+                                        {{ $assignment->assignment_date->format('d F Y') }}
+                                    </span>
+                                    <span class="document-desc">Jam: {{ $assignment->start_time->format('H:i') }} s/d
+                                        {{ $assignment->end_time->format('H:i') }}</span>
+                                    <span
+                                        class="badge bg-{{ $assignment->progress == 'Ditugaskan' ? 'info' : ($assignment->progress == 'Pending' ? 'warning' : 'Selesai') }}">
+                                        {{ $assignment->progress }}
+                                    </span>
+                                </div>
                             </div>
-
-                            <div class="d-flex flex-column justify-content-between align-items-start">
-                                <h2 class="document-title">Customer Guide</h2>
-
-                                <span class="document-desc">180 MB • PDF</span>
+                            <a href="#" class="btn-statistics" title="Proses Tugas">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="navy" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z" />
+                                </svg>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="document-item">
+                            <div class="d-flex justify-content-start align-items-center">
+                                <div class="d-flex flex-column justify-content-between align-items-start">
+                                    <h2 class="document-title">No Assignments</h2>
+                                    <span class="document-desc">You have no tasks at the moment.</span>
+                                </div>
                             </div>
                         </div>
-
-                        <button class="btn-statistics">
-                            <img src="{{ asset('template/assets/img/global/download.svg') }}" alt="">
-                        </button>
-
-                    </div>
+                    @endforelse
 
                     <div class="document-item">
                         <div class="d-flex justify-content-start align-items-center">

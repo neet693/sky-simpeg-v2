@@ -86,7 +86,7 @@
 
         <span>My Team</span>
     </a>
-
+    
     <a href="#" class="sidebar-item" onclick="toggleActive(this)">
         <!-- <img src="./assets/img/global/dollar-sign.svg" alt=""> -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,38 +117,6 @@
 
         <span>Detail Karyawan</span>
     </a>
-
-    {{-- <a href="#" class="sidebar-item" onclick="toggleActive(this)">
-        <!-- <img src="./assets/img/global/home.svg" alt=""> -->
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
-                stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M9 22V12H15V22" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-        </svg>
-
-        <span>Diklat</span>
-    </a> --}}
-
-    {{-- <a href="#" class="sidebar-item" onclick="toggleActive(this)">
-        <!-- <img src="./assets/img/global/gift.svg" alt=""> -->
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 12V22H4V12" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            <path d="M22 7H2V12H22V7Z" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
-            <path d="M12 22V7" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path
-                d="M12 7H16.5C17.163 7 17.7989 6.73661 18.2678 6.26777C18.7366 5.79893 19 5.16304 19 4.5C19 3.83696 18.7366 3.20107 18.2678 2.73223C17.7989 2.26339 17.163 2 16.5 2C13 2 12 7 12 7Z"
-                stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path
-                d="M12 7H7.5C6.83696 7 6.20107 6.73661 5.73223 6.26777C5.26339 5.79893 5 5.16304 5 4.5C5 3.83696 5.26339 3.20107 5.73223 2.73223C6.20107 2.26339 6.83696 2 7.5 2C11 2 12 7 12 7Z"
-                stroke="#ABB3C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-
-        <span>History Pendidikan</span>
-    </a> --}}
 
     <a href="{{ route('profile.show') }}" class="sidebar-item" onclick="toggleActive(this)">
         <!-- <img src="./assets/img/global/settings.svg" alt=""> -->
