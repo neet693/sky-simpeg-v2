@@ -59,6 +59,31 @@ aside #toggle-navbar {
     align-items: center;
     text-decoration: none;
 }
+
+.birokrasi-content,
+.akun-content {
+    display: none;
+    padding-left: 20px;
+}
+
+.birokrasi-content a,
+.akun-content a {
+    text-decoration: none;
+    display: block;
+    background: transparent;
+    height: 46px;
+    border-radius: 16px;
+    padding: 0 11px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dropdown .show {
+    display: block;
+}
+
 @media (min-width: 1200px) {
     .sidebar-logo {
         padding: 0 24px;

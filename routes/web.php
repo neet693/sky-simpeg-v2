@@ -7,8 +7,11 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeEducationController;
 use App\Http\Controllers\EmployeeSpouseController;
 use App\Http\Controllers\EmploymentDetailController;
+use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\TaskController;
 use App\Livewire\EmployeeDashboards;
+use App\Livewire\LeaveForm;
+use App\Livewire\LeaveList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,4 +68,8 @@ Route::middleware([
     // Route Children
     Route::post('/employees/{employee_number}/employee-children', [EmployeeChildrenController::class, 'store'])->name('employee.children.store');
     Route::put('/employees/{employee_number}/employee-children/{id}', [EmployeeChildrenController::class, 'update'])->name('employee.children.update');
+
+    //Route Leave (Izin)
+    Route::resource('leaves', LeaveController::class);
+    // Route::get('/leaves/create', LeaveForm::class)->name('leave.create');
 });
