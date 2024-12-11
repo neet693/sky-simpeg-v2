@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeEducationController;
 use App\Http\Controllers\EmployeeSpouseController;
 use App\Http\Controllers\EmploymentDetailController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\TaskController;
 use App\Livewire\EmployeeDashboards;
 use App\Livewire\LeaveForm;
@@ -72,4 +73,5 @@ Route::middleware([
     //Route Leave (Izin)
     Route::resource('leaves', LeaveController::class);
     // Route::get('/leaves/create', LeaveForm::class)->name('leave.create');
+    Route::resource('meetings', MeetingController::class);
 });

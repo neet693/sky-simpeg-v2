@@ -1,11 +1,10 @@
 <div>
-    <div class="col-6 d-flex justify-content-end">
-        @livewire('leave-form')
-    </div>
+    @livewire('leave-form')
+
     @if (session()->has('message'))
         <div>{{ session('message') }}</div>
     @endif
-    <table class="min-w-full bg-white border border-gray-300">
+    <table class="min-w-full bg-white border border-gray-300 mt-3">
         <thead>
             <tr>
                 <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Nama</th>

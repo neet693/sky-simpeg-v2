@@ -15,4 +15,9 @@ class unit extends Model
     {
         return $this->hasMany(EmploymentDetail::class, 'unit_id');
     }
+
+    public function meetings()
+    {
+        return $this->belongsToMany(Meeting::class, 'meeting_unit');
+    }
 }
