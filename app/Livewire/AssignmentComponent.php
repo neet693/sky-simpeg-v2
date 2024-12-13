@@ -24,7 +24,13 @@ class AssignmentComponent extends Component
     public $progress = 'Ditugaskan';
     public $kendala;
     public $selectedAssignmentId = null;
-    public $isOpen = false; // Track modal visibility
+    public $isOpen = false;
+    public $isViewMode = false;
+    public $isEditMode = false;
+
+    public $isOpenKendalaModal = false; // Menambahkan properti untuk mengontrol status modal
+    public $assignmentIdForKendala;
+    public $statusForKendala;
 
     public function mount()
     {
@@ -130,6 +136,112 @@ class AssignmentComponent extends Component
         $this->description = null;
         $this->progress = 'Ditugaskan';
         $this->kendala = null;
+
+        $this->isEditMode = false;
+        $this->isViewMode = false;
+    }
+
+    //Edit Form
+    public function edit($assignmentId)
+    {
+        $this->isEditMode = true;
+        $this->isViewMode = false; // Nonaktifkan view-only mode
+
+        $assignment = Assignment::findOrFail($assignmentId);
+        $this->selectedAssignmentId = $assignment->id;
+        $this->assigner_employee_number = $assignment->assigner_employee_number;
+        $this->assignee_employee_number = $assignment->assignee_employee_number;
+        $this->unit_id = $assignment->unit_id;
+        $this->assignment_date = $assignment->assignment_date->format('Y-m-d');
+        $this->start_time = $assignment->start_time->format('H:i');
+        $this->end_time = $assignment->end_time->format('H:i');
+        $this->title = $assignment->title;
+        $this->description = $assignment->description;
+        $this->progress = $assignment->progress;
+
+        $this->open();
+    }
+
+    public function viewDetail($assignmentId)
+    {
+        $this->isEditMode = false;
+        $this->isViewMode = true;
+
+        $assignment = Assignment::with(['assigner.user', 'assignee.user', 'unit'])->findOrFail($assignmentId);
+        $this->assigner_employee_number = $assignment->assigner_employee_number;
+        $this->assignee_employee_number = $assignment->assignee_employee_number;
+        $this->title = $assignment->title;
+        $this->description = $assignment->description;
+        $this->assignment_date = $assignment->assignment_date->format('Y-m-d');
+        $this->start_time = $assignment->start_time->format('H:i');
+        $this->end_time = $assignment->end_time->format('H:i');
+        $this->progress = $assignment->progress;
+
+        $this->open();
+    }
+
+
+
+    //Delete
+    public function delete($assignmentId)
+    {
+        if (!in_array(Auth::user()->role, ['admin', 'kepala'])) {
+            abort(403, 'Akses ditolak.');
+        }
+        $assignment = Assignment::findOrFail($assignmentId);
+        $assignment->delete();
+        session()->flash('message', 'Tugas berhasil dihapus.');
+        $this->refreshAssignments(); // Perbarui daftar tugas
+    }
+
+    public function setStatusSelesai($assignmentId)
+    {
+        // Menemukan assignment berdasarkan ID
+        $assignment = Assignment::find($assignmentId);
+
+        // Mengubah status menjadi "Selesai"
+        $assignment->progress = 'Selesai';
+        $assignment->save();
+        $this->refreshAssignments();
+
+        // Memberi feedback setelah perubahan status berhasil
+        session()->flash('message', 'Tugas berhasil diselesaikan.');
+    }
+
+    public function openPendingModal($assignmentId)
+    {
+        $this->assignmentIdForKendala = $assignmentId;
+        $this->statusForKendala = 'Pending';
+        $this->isOpenKendalaModal = true;
+    }
+
+    public function closePendingModal()
+    {
+        $this->isOpenKendalaModal = false; // Menutup modal
+    }
+
+    // Method untuk submit kendala dan update status
+    public function submitPending()
+    {
+        // Validasi kendala
+        $this->validate([
+            'kendala' => 'required|string',
+        ]);
+
+        // Menemukan assignment berdasarkan ID
+        $assignment = Assignment::findOrFail($this->assignmentIdForKendala);
+
+        // Mengubah status menjadi "Pending" dan menyimpan kendala
+        $assignment->progress = 'Pending';
+        $assignment->kendala = $this->kendala;
+        $assignment->save();
+
+        // Menutup modal dan refresh data tugas
+        $this->closePendingModal();
+        $this->refreshAssignments();
+
+        // Memberi feedback setelah perubahan status berhasil
+        session()->flash('message', 'Tugas berhasil diubah menjadi Pending.');
     }
 
     public function render()

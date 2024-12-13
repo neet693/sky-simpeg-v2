@@ -11,16 +11,10 @@
                 <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Tanggal
                     Permohonan
                 </th>
-                {{-- <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Tanggal
-                Selesai</th> --}}
-                {{-- <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Keterangan
-                </th> --}}
                 <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Disetujui Oleh
                 </th>
                 <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Status</th>
-                @if (auth()->user()->role === 'kepala')
-                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Aksi</th>
-                @endif
+                <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -28,18 +22,42 @@
                 <tr>
                     <td class="px-6 py-3 border-b border-gray-300">{{ $leave->user->name }}</td>
                     <td class="px-6 py-3 border-b border-gray-300">{{ $leave->tanggal_mulai->format('d M y') }}</td>
-                    {{-- <td class="px-6 py-3 border-b border-gray-300">{{ $leave->tanggal_selesai->format('d M y') }}</td> --}}
-                    {{-- <td class="px-6 py-3 border-b border-gray-300">{{ $leave->keterangan }}</td> --}}
-                    <td class="px-6 py-3 border-b border-gray-300">{{ $leave->approver->name }}</td>
-                    <td class="px-6 py-3 border-b border-gray-300">{{ $leave->status_permohonan }}</td>
-
                     <td class="px-6 py-3 border-b border-gray-300">
-                        @if (auth()->user()->role === 'kepala' && $leave->status_permohonan === 'Menunggu Persetujuan')
-                            <button wire:click="approve({{ $leave->id }})">Setujui</button>
-                            <button wire:click="reject({{ $leave->id }})">Tolak</button>
-                        @endif
-                        <button wire:click="viewDetails({{ $leave->id }})">Lihat Detail</button>
+                        {{ $leave->approver ? $leave->approver->name : 'Belum disetujui' }}</td>
+                    <td class="px-6 py-3 border-b border-gray-300">{{ $leave->status_permohonan }}</td>
+                    <td class="px-6 py-3 border-b border-gray-300">
+                        <div class="flex space-x-4">
+                            @if (auth()->user()->role === 'kepala' && $leave->status_permohonan === 'Menunggu Persetujuan')
+                                <button wire:click="approve({{ $leave->id }})" title="Setujui"
+                                    class="btn btn-success flex items-center justify-center h-10 w-10">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m4.5 12.75 6 6 9-13.5" />
+                                    </svg>
+                                </button>
+                                <button wire:click="reject({{ $leave->id }})" title="Tolak"
+                                    class="btn btn-danger flex items-center justify-center h-10 w-10">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            @endif
+                            <button wire:click="viewDetails({{ $leave->id }})"
+                                title="Lihat Izin {{ $leave->user->name }}"
+                                class="btn btn-info flex items-center justify-center h-10 w-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+                            </button>
+                        </div>
                     </td>
+
                 </tr>
             @empty
                 <tr>
