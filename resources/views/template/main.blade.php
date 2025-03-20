@@ -118,7 +118,7 @@
 
                     if (newValue === originalValue) {
                         input.replaceWith(
-                            `<p class="editable font-semibold" data-field="${field}">${originalValue}</p>`
+                            `<p class="font-semibold editable" data-field="${field}">${originalValue}</p>`
                         );
                         return;
                     }
@@ -135,13 +135,13 @@
                         },
                         success: function(response) {
                             input.replaceWith(
-                                `<p class="editable font-semibold" data-field="${field}">${newValue}</p>`
+                                `<p class="font-semibold editable" data-field="${field}">${newValue}</p>`
                             );
                         },
                         error: function(xhr) {
                             console.error("Error updating task:", xhr.responseText);
                             input.replaceWith(
-                                `<p class="editable font-semibold" data-field="${field}">${originalValue}</p>`
+                                `<p class="font-semibold editable" data-field="${field}">${originalValue}</p>`
                             );
                         }
                     });
@@ -173,18 +173,24 @@
                 $('#inProgressColumn').empty();
                 $('#doneColumn').empty();
 
+                let currentUserId = {{ auth()->id() }}; // Ambil ID user yang sedang login dari Blade
+
                 tasks.forEach(function(task) {
                     let title = task.title ?? "Tambah Title";
                     let description = task.description ?? "Tambah Description";
+
+                    // Tombol hapus hanya muncul jika user adalah pemilik task
+                    let deleteButton = task.user_id === currentUserId ?
+                        `<button class="text-red-600 delete-task" data-id="${task.id}">Hapus</button>` :
+                        '';
+
                     let taskElement = `
-                        <div class="task bg-white p-4 mb-4 rounded-lg shadow-lg cursor-grab hover:shadow-xl ui-sortable-handle"
-                             data-id="${task.id}" data-order="${task.order}" data-status="${task.status}">
-                            ${title !== "" ? `<p class="font-semibold editable" data-field="title">${title}</p>` : ""}
-                            ${description !== "" ? `<p class="font-semibold editable" data-field="description">${description}</p>` : ""}
-                            <button class="text-red-600 delete-task" data-id="${task.id}">
-                                Hapus
-                            </button>
-                        </div>`;
+            <div class="p-4 mb-4 bg-white rounded-lg shadow-lg task cursor-grab hover:shadow-xl ui-sortable-handle"
+                 data-id="${task.id}" data-order="${task.order}" data-status="${task.status}">
+                ${title !== "" ? `<p class="font-semibold editable" data-field="title">${title}</p>` : ""}
+                ${description !== "" ? `<p class="font-semibold editable" data-field="description">${description}</p>` : ""}
+                ${deleteButton}
+            </div>`;
 
                     if (task.status === 'To Do') {
                         $('#todoColumn').append(taskElement);
@@ -196,18 +202,6 @@
                 });
             }
 
-            // 5. Event handler untuk tombol hapus
-            $(document).on('click', '.delete-task', function() {
-                const taskId = $(this).data('id');
-
-                // Trigger penghapusan task melalui Livewire
-                Livewire.dispatch('deleteTask', {
-                    taskId: taskId
-                });
-
-                // Menghapus elemen task dari DOM setelah dihapus di server
-                $(`.task[data-id="${taskId}"]`).remove();
-            });
         });
     </script>
 

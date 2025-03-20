@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Task;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth; // Untuk mendapatkan user yang login
 
 class TaskList extends Component
 {
@@ -24,7 +25,9 @@ class TaskList extends Component
 
     public function refreshTasks()
     {
-        $this->tasks = Task::orderBy('order')->get();
+        $this->tasks = Task::select('id', 'title', 'description', 'status', 'order', 'user_id')
+            ->orderBy('order')
+            ->get();
     }
 
     public function confirmDelete($taskId)
@@ -36,10 +39,21 @@ class TaskList extends Component
     public function deleteTask($taskId)
     {
         $task = Task::find($taskId);
-        if ($task) {
-            $task->delete();
-            $this->refreshTasks();  // Memperbarui daftar tasks setelah penghapusan
+
+        if (!$task) {
+            session()->flash('error', 'Task tidak ditemukan.');
+            return;
         }
+
+        // Hanya pemilik task yang bisa menghapus
+        if ($task->user_id !== Auth::id()) {
+            session()->flash('error', 'Anda tidak memiliki izin untuk menghapus task ini.');
+            return;
+        }
+
+        $task->delete();
+        session()->flash('success', 'Task berhasil dihapus.');
+        $this->refreshTasks();  // Memperbarui daftar tasks setelah penghapusan
     }
 
     public function updateTaskOrder($tasks)

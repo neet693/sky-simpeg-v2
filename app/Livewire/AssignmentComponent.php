@@ -7,10 +7,12 @@ use App\Models\EmploymentDetail;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class AssignmentComponent extends Component
 {
-    public $assignments = [];
+    use WithPagination;
+
     public $units = [];
     public $employees = [];
     public $assigner_employee_number;
@@ -32,6 +34,12 @@ class AssignmentComponent extends Component
     public $assignmentIdForKendala;
     public $statusForKendala;
 
+    //Sorting
+
+    public $search = '';
+    public $sortColumn = 'progress'; // Default sorting field
+    public $sortDirection = 'asc';
+
     public function mount()
     {
         if (Auth::user()->role === 'admin') {
@@ -46,20 +54,6 @@ class AssignmentComponent extends Component
             $this->assigner_employee_number = Auth::user()->employmentDetail->employee_number;
             $this->unit_id = Auth::user()->employmentDetail->unit_id;
         }
-
-        $this->refreshAssignments();
-    }
-
-    public function refreshAssignments()
-    {
-        $query = Assignment::query();
-
-        if (Auth::user()->role !== 'admin') {
-            $unitId = Auth::user()->employmentDetail->unit_id;
-            $query->where('unit_id', $unitId);
-        }
-
-        $this->assignments = $query->with(['assigner.user', 'assignee.user', 'unit'])->get();
     }
 
     public function open()
@@ -104,7 +98,6 @@ class AssignmentComponent extends Component
 
         $this->resetForm();
         $this->close(); // Close the modal after save
-        $this->refreshAssignments();
     }
 
     private function getInputData()
@@ -191,7 +184,6 @@ class AssignmentComponent extends Component
         $assignment = Assignment::findOrFail($assignmentId);
         $assignment->delete();
         session()->flash('message', 'Tugas berhasil dihapus.');
-        $this->refreshAssignments(); // Perbarui daftar tugas
     }
 
     public function setStatusSelesai($assignmentId)
@@ -202,7 +194,6 @@ class AssignmentComponent extends Component
         // Mengubah status menjadi "Selesai"
         $assignment->progress = 'Selesai';
         $assignment->save();
-        $this->refreshAssignments();
 
         // Memberi feedback setelah perubahan status berhasil
         session()->flash('message', 'Tugas berhasil diselesaikan.');
@@ -238,14 +229,39 @@ class AssignmentComponent extends Component
 
         // Menutup modal dan refresh data tugas
         $this->closePendingModal();
-        $this->refreshAssignments();
+
 
         // Memberi feedback setelah perubahan status berhasil
         session()->flash('message', 'Tugas berhasil diubah menjadi Pending.');
     }
 
+
+    // Hanya reset halaman saat search berubah, agar sorting tidak terganggu
+    public function searchAssignments()
+    {
+        $this->resetPage(); // Reset pagination saat search
+    }
+
+
+    // Fungsi sorting, tidak mereset search agar tidak terganggu
+    public function sortBy($column)
+    {
+        if ($this->sortColumn === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortColumn = $column;
+            $this->sortDirection = 'asc';
+        }
+    }
+
     public function render()
     {
-        return view('livewire.assignment-component');
+        $assignments = Assignment::query()
+            ->when($this->search, function ($query) {
+                $query->where('title', 'like', "%{$this->search}%");
+            })
+            ->orderBy($this->sortColumn, $this->sortDirection)
+            ->paginate(10);
+        return view('livewire.assignment-component', compact('assignments'));
     }
 }

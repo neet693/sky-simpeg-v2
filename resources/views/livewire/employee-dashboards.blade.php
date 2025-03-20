@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <h2 class="content-title">Statistics</h2>
-                <h5 class="content-desc mb-4">Your business growth</h5>
+                <h5 class="mb-4 content-desc">Your business growth</h5>
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
@@ -20,7 +20,7 @@
 
                         <div class="statistics-list d-flex align-items-center">
                             @foreach ($colleagues as $colleague)
-                                <div class="position-relative mx-1">
+                                <div class="mx-1 position-relative">
                                     <a href="{{ route('employee.show', $colleague->employee_number) }}"
                                         title="Lihat Profil {{ $colleague->name }}">
                                         <img class="statistics-image rounded-circle"
@@ -29,7 +29,7 @@
                                                 : 'https://ui-avatars.com/api/?name=' . urlencode($colleague->name) . '&color=7F9CF5&background=EBF4FF' }}"
                                             alt="{{ $colleague->name }}">
                                     </a>
-                                    <span class="helper-name position-absolute text-white bg-dark p-1 rounded"
+                                    <span class="p-1 text-white rounded helper-name position-absolute bg-dark"
                                         style="bottom: -20px; left: 50%; transform: translateX(-50%); display: none;">
                                         {{ $colleague->name }}
                                     </span>
@@ -140,10 +140,10 @@
 
         </div>
 
-        <div class="row mt-5">
+        <div class="mt-5 row">
             <div class="col-12 col-lg-6">
-                <h2 class="content-title">Tugas dan Rapat</h2>
-                <h5 class="content-desc mb-4">List Rapat dan Tugas Anda!</h5>
+                <h2 class="content-title">Tugas</h2>
+                <h5 class="mb-4 content-desc">List Tugas Anda!</h5>
 
                 <div class="document-card">
                     @forelse ($assignments as $assignment)
@@ -181,7 +181,7 @@
                         </div>
                     @endforelse
 
-                    <div class="document-item">
+                    {{-- <div class="document-item">
                         <div class="d-flex justify-content-start align-items-center">
                             <div class="document-icon globe">
                                 <img src="{{ asset('template/assets/img/home/document/twitch.svg') }}"
@@ -239,15 +239,15 @@
                             <img src="{{ asset('template/assets/img/global/download.svg') }}" alt="">
                         </button>
 
-                    </div>
+                    </div> --}}
 
 
                 </div>
             </div>
 
             <div class="col-12 col-lg-6">
-                <h2 class="content-title">History</h2>
-                <h5 class="content-desc mb-4">Track the flow</h5>
+                <h2 class="content-title">Rapat</h2>
+                <h5 class="mb-4 content-desc">List Rapat terbaru</h5>
 
                 <div class="document-card">
                     <div class="document-item">
@@ -265,7 +265,7 @@
 
                     </div>
 
-                    <div class="document-item">
+                    {{-- <div class="document-item">
                         <div class="d-flex justify-content-start align-items-center">
                             <img class="document-icon"
                                 src="{{ asset('template/assets/img/home/history/photo-1.png') }}" alt="">
@@ -302,7 +302,7 @@
                                 <span class="document-desc">Promoted to Quality Manager</span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>
