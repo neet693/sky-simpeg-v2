@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('employment_details', function (Blueprint $table) {
             $table->id();
             $table->string('employee_number');
-            $table->date('tahun_masuk')->nullable();
+            $table->string('tahun_masuk')->nullable();
             $table->foreignId('unit_id')->constrained('units')->nullable()->onDelete('cascade');
-            $table->date('tahun_sertifikasi')->nullable();
+            $table->string('tahun_sertifikasi')->nullable();
             $table->string('status_kepegawaian')->default('tidak_tetap')->nullable();
             $table->timestamps();
 

@@ -1,7 +1,7 @@
 @extends('template.main')
 @section('content')
     {{-- Profile Pegawai --}}
-    <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="p-6 bg-white rounded-lg shadow-md">
         <div class="flex items-center space-x-4">
             <img src="{{ $employee->profile_photo_path
                 ? Storage::url($employee->profile_photo_path)
@@ -46,7 +46,7 @@
     {{-- End --}}
 
     {{-- Informasi Terkait Kepegawaian di Yahya --}}
-    <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+    <div class="p-6 mt-6 bg-white rounded-lg shadow-md">
         <div class="row">
             <div class="col-6">
                 <h3 class="text-xl font-semibold">Informasi Kepegawaian Yahya</h3>
@@ -63,7 +63,8 @@
             <div>
                 <p class="text-gray-600">Tahun Masuk</p>
                 <p class="font-semibold">
-                    {{ $employee->employmentDetail ? $employee->employmentDetail->tahun_masuk->format('Y') : 'N/A' }}</p>
+                    {{ $employee->employmentDetail ? $employee->employmentDetail->tahun_masuk->format(' F Y') : 'N/A' }}
+                </p>
             </div>
             <div>
                 <p class="text-gray-600">Unit</p>
@@ -74,7 +75,7 @@
             <div>
                 <p class="text-gray-600">Tahun sertifikasi</p>
                 <p class="font-semibold">
-                    {{ $employee->employmentDetail ? $employee->employmentDetail->tahun_sertifikasi->format('Y') : 'N/A' }}
+                    {{ $employee->employmentDetail ? $employee->employmentDetail->tahun_sertifikasi->format('F Y') : 'N/A' }}
                 </p>
             </div>
             <div>
@@ -87,17 +88,17 @@
     </div>
     {{-- End --}}
 
-    <div class="flex space-x-6 mt-6 mb-6">
+    <div class="flex mt-6 mb-6 space-x-6">
         {{-- Riwayat Pendidikan dan Diklat --}}
-        <div class="bg-white p-6 rounded-lg shadow-md mt-6 w-1/2">
-            <div class="flex justify-between items-center">
+        <div class="w-1/2 p-6 mt-6 bg-white rounded-lg shadow-md">
+            <div class="flex items-center justify-between">
                 <h3 class="text-xl font-semibold">Riwayat Pendidikan dan Diklat</h3>
             </div>
 
             <!-- Tabs -->
             <div class="mt-4 border-b tabs-education">
                 <nav class="flex space-x-4" role="tablist">
-                    <button class="tab-button active sidebar-item text-white"
+                    <button class="text-white tab-button active sidebar-item"
                         data-target="#educationHistoryTab">Pendidikan</button>
                     <button class="tab-button sidebar-item hover:bg-purple-400" data-target="#diklatTab">Diklat</button>
                 </nav>
@@ -107,7 +108,7 @@
             <div class="mt-4">
                 <!-- Pendidikan -->
                 <div id="educationHistoryTab" class="tab-content active">
-                    <div class="flex justify-between items-center">
+                    <div class="flex items-center justify-between">
                         <h4 class="text-lg font-semibold">Informasi Pendidikan</h4>
 
                         @can('add-editProfile', $employee->employee_number)
@@ -117,12 +118,12 @@
                             @include('components.modal-employee-education')
                         @endcan
                     </div>
-                    <div class="space-y-4 mt-4">
+                    <div class="mt-4 space-y-4">
                         @forelse ($employee->educationHistories as $education)
-                            <div class="relative p-4 border rounded-lg shadow-lg flex">
+                            <div class="relative flex p-4 border rounded-lg shadow-lg">
                                 {{-- <div class="w-16 h-16 mr-4">
                         <img src="{{ Storage::url($education->media) }}" alt="{{ $education->name }}"
-                            class="w-full h-full object-cover rounded">
+                            class="object-cover w-full h-full rounded">
                         </div> --}}
                                 <div class="flex-grow">
                                     <h2 class="text-lg font-semibold">{{ $education->institution }}</h2>
@@ -136,7 +137,7 @@
                                 @can('add-editProfile', $employee->employee_number)
                                     <!-- Edit Button -->
                                     <a href="#" data-modal-toggle="diklatModal{{ $education->id }}"
-                                        class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                                        class="absolute p-2 text-blue-500 top-2 right-2 hover:text-blue-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -158,8 +159,8 @@
                 </div>
 
                 <!-- Diklat -->
-                <div id="diklatTab" class="tab-content hidden">
-                    <div class="flex justify-between items-center">
+                <div id="diklatTab" class="hidden tab-content">
+                    <div class="flex items-center justify-between">
                         <h4 class="text-lg font-semibold">Informasi Diklat</h4>
                         @can('add-editProfile', $employee->employee_number)
                             <button id="openDiklatModalButton" class="btn btn-statistic">
@@ -168,12 +169,12 @@
                             @include('components.modal-employee-certificates')
                         @endcan
                     </div>
-                    <div class="space-y-4 mt-4">
+                    <div class="mt-4 space-y-4">
                         @forelse ($employee->employeeCertificates as $certificate)
-                            <div class="relative p-4 border rounded-lg shadow-lg flex">
+                            <div class="relative flex p-4 border rounded-lg shadow-lg">
                                 <div class="w-16 h-16 mr-4">
                                     <img src="{{ Storage::url($certificate->media) }}" alt="{{ $certificate->name }}"
-                                        class="w-full h-full object-cover rounded">
+                                        class="object-cover w-full h-full rounded">
                                 </div>
                                 <div class="flex-grow">
                                     <h2 class="text-lg font-semibold">{{ $certificate->name }}</h2>
@@ -189,7 +190,7 @@
                                 @can('add-editProfile', $employee->employee_number)
                                     <!-- Edit Button -->
                                     <a href="#" data-modal-toggle="diklatModal{{ $certificate->name }}"
-                                        class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                                        class="absolute p-2 text-blue-500 top-2 right-2 hover:text-blue-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -216,15 +217,15 @@
         {{-- End --}}
 
         {{-- Informasi Keluarga --}}
-        <div class="bg-white p-6 rounded-lg shadow-md mt-6 w-1/2">
-            <div class="flex justify-between items-center">
+        <div class="w-1/2 p-6 mt-6 bg-white rounded-lg shadow-md">
+            <div class="flex items-center justify-between">
                 <h3 class="text-xl font-semibold">Informasi Keluarga</h3>
             </div>
 
             <!-- Tabs -->
             <div class="mt-4 border-b tabs-family">
                 <nav class="flex space-x-4" role="tablist">
-                    <button class="tab-button active sidebar-item text-white"
+                    <button class="text-white tab-button active sidebar-item"
                         data-target="#spouseTab">Suami/Istri</button>
                     <button class="tab-button sidebar-item hover:bg-purple-400" data-target="#childrenTab">Anak</button>
                 </nav>
@@ -234,7 +235,7 @@
             <div class="mt-4">
                 <!-- Suami/Istri -->
                 <div id="spouseTab" class="tab-content active">
-                    <div class="flex justify-between items-center">
+                    <div class="flex items-center justify-between">
                         <h4 class="text-lg font-semibold">Informasi Suami/Istri</h4>
                         @can('add-editProfile', $employee->employee_number)
                             <button id="openSpouseModalButton" class="btn btn-statistic">
@@ -243,9 +244,9 @@
                             @include('components.modal-employee-spouse')
                         @endcan
                     </div>
-                    <div class="space-y-4 mt-4">
+                    <div class="mt-4 space-y-4">
                         @forelse ($employee->employeeSpouses as $spouse)
-                            <div class="relative p-4 border rounded-lg shadow-lg flex">
+                            <div class="relative flex p-4 border rounded-lg shadow-lg">
                                 <div class="flex-grow">
                                     <h2 class="text-lg font-semibold">{{ $spouse->name }}</h2>
                                     <p class="text-gray-600">
@@ -257,7 +258,7 @@
                                 </div>
                                 @can('add-editProfile', $employee->employee_number)
                                     <a href="#" data-modal-toggle="spouseModal{{ $spouse->id }}"
-                                        class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                                        class="absolute p-2 text-blue-500 top-2 right-2 hover:text-blue-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -279,8 +280,8 @@
                 </div>
 
                 <!-- Anak -->
-                <div id="childrenTab" class="tab-content hidden">
-                    <div class="flex justify-between items-center">
+                <div id="childrenTab" class="hidden tab-content">
+                    <div class="flex items-center justify-between">
                         <h4 class="text-lg font-semibold">Informasi Anak</h4>
                         @can('add-editProfile', $employee->employee_number)
                             <button id="openChildrenModalButton" class="btn btn-statistic">
@@ -289,9 +290,9 @@
                             @include('components.modal-employee-children')
                         @endcan
                     </div>
-                    <div class="space-y-4 mt-4">
+                    <div class="mt-4 space-y-4">
                         @forelse ($employee->employeeChilds as $child)
-                            <div class="relative p-4 border rounded-lg shadow-lg flex">
+                            <div class="relative flex p-4 border rounded-lg shadow-lg">
                                 <div class="flex-grow">
                                     <h2 class="text-lg font-semibold">{{ $child->name }}</h2>
                                     <p class="text-gray-600">Tanggal Lahir: {{ $child->birth_date->format('d F Y') }}
@@ -302,7 +303,7 @@
                                 </div>
                                 @can('add-editProfile', $employee->employee_number)
                                     <a href="#" data-modal-toggle="childModal{{ $child->id }}"
-                                        class="absolute top-2 right-2 p-2 text-blue-500 hover:text-blue-700">
+                                        class="absolute p-2 text-blue-500 top-2 right-2 hover:text-blue-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"

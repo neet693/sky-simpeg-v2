@@ -21,6 +21,6 @@ class UnitSeeder extends Seeder
         ModelsUnit::create(['name' => 'IT Department']);
         ModelsUnit::create(['name' => 'Proyek Sarpras']);
         ModelsUnit::create(['name' => 'TU Pusat']);
-        ModelsUnit::create(['name' => 'Uncatagorized Unit']);
+        // ModelsUnit::create(['name' => 'Uncatagorized Unit']);
     }
 }

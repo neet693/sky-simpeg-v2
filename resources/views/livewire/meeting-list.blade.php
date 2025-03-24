@@ -1,43 +1,43 @@
 <div>
     @livewire('meeting-form')
 
-    <table class="min-w-full bg-white border border-gray-300 mt-3">
+    <table class="min-w-full bg-white border border-gray-300 display" id="meetingsTable">
         <thead>
             <tr>
-                <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Judul</th>
-                <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Tanggal
-                    Rapat
-                </th>
-                <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Pukul</th>
-                <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Lokasi</th>
+                <th>Judul</th>
+                <th>Tanggal</th>
+                <th>Pukul</th>
+                <th>Lokasi</th>
                 @if (auth()->user()->role === 'kepala' || auth()->user()->role === 'admin')
-                    <th class="px-6 py-3 border-b border-gray-300 text-left text-sm font-medium text-gray-700">Aksi</th>
+                    <th>Aksi</th>
                 @endif
             </tr>
         </thead>
         <tbody>
-            @forelse ($meetings as $meeting)
+            @foreach ($meetings as $meeting)
                 <tr>
-                    <td class="px-6 py-3 border-b border-gray-300">{{ $meeting->title }}</td>
-                    <td class="px-6 py-3 border-b border-gray-300">{{ $meeting->meeting_date->format('d M y') }}</td>
-                    <td class="px-6 py-3 border-b border-gray-300">{{ $meeting->start_time->format('H:i') }} s/d
-                        {{ $meeting->end_time->format('H:i') }}</td>
-                    <td class="px-6 py-3 border-b border-gray-300">{{ $meeting->meeting_location }}</td>
-                    {{-- <td class="px-6 py-3 border-b border-gray-300">{{ $meeting->meeting_result }}</td> --}}
-
+                    <td>{{ $meeting->title }}</td>
+                    <td>{{ $meeting->meeting_date->format('d M y') }}</td>
+                    <td>{{ $meeting->start_time->format('H:i') }} s/d
+                        {{ $meeting->end_time->format('H:i') }}
+                    </td>
+                    <td>{{ $meeting->meeting_location }}</td>
                     @if (auth()->user()->role === 'kepala' || auth()->user()->role === 'admin')
                         <td class="px-6 py-3 border-b border-gray-300">
                             {{-- <button wire:click="approve({{ $leave->id }})">Setujui</button>
-                            <button wire:click="reject({{ $leave->id }})">Tolak</button> --}}
+                        <button wire:click="reject({{ $leave->id }})">Tolak</button> --}}
                             <button wire:click="viewDetails({{ $meeting->id }})">Lihat Detail</button>
+                        </td>
                     @endif
-                    </td>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="6" class="text-center font-bold">Data Kosong.</td>
-                </tr>
-            @endforelse
+            @endforeach
         </tbody>
     </table>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#meetingsTable').DataTable();
+        });
+    </script>
 </div>
