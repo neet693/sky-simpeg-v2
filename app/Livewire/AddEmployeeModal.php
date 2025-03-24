@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\unit;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -42,7 +43,16 @@ class AddEmployeeModal extends Component
     {
         $this->validate();
 
-        User::create([
+        // Cari unit "Uncategorized Unit"
+        $uncategorizedUnit = unit::where('name', 'Uncategorized Unit')->first();
+
+        // Jika tidak ditemukan, buat unit baru (opsional)
+        if (!$uncategorizedUnit) {
+            $uncategorizedUnit = unit::create(['name' => 'Uncategorized Unit']);
+        }
+
+        // Buat user dengan unit_id langsung ke "Uncategorized Unit"
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
@@ -53,11 +63,17 @@ class AddEmployeeModal extends Component
             'password' => Hash::make($this->password),
         ]);
 
+        // Hubungkan user ke unit tersebut melalui employment detail
+        $user->employmentDetail()->create([
+            'unit_id' => $uncategorizedUnit->id,
+        ]);
+
         session()->flash('message', 'Employee added successfully.');
         $this->reset();
         $this->close();
-        $this->dispatch('employeeAdded'); // Emit diganti ke Dispatch
+        $this->dispatch('employeeAdded');
     }
+
 
     public function render()
     {
